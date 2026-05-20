@@ -1,493 +1,1567 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Albion Online — Asia Activity Assistant</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<title>Albion Asia · Activity Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500&family=Oxanium:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#06090f;
-  --card:#0d1520;
-  --card2:#111d2f;
-  --border:#1e2e46;
-  --text:#d6e4f7;
-  --muted:#5c7a9e;
-  --gold:#f5c451;
-  --green:#4ade80;
-  --blue:#60a5fa;
-  --red:#f87171;
-  --purple:#c084fc;
-  --shadow:0 12px 48px rgba(0,0,0,.55);
-  --col-low:#2d7a52; --col-mid:#7a6a1e; --col-high:#7a2a2a; --col-peak:#5a2d7a;
-  --rz-empty:#111b28; --rz-low:#1e4a38; --rz-medium:#5a4a10;
-  --rz-high:#6b2020; --rz-danger:#8b1a1a; --rz-cta:#5a1a6b;
+/* ═══════════════════════════════════════
+   DESIGN SYSTEM — Design for the Better World
+   Inclusive · Purposeful · Accessible · Warm
+   Inspired by Don Norman + Victor Papanek principles
+═══════════════════════════════════════ */
+
+/* — DARK THEME (default) — */
+[data-theme="dark"] {
+  --ink:        #1a1612;
+  --ink-soft:   #2c2520;
+  --surface:    #221e1a;
+  --surface-2:  #2a2420;
+  --surface-3:  #332e28;
+  --border:     #3d3630;
+  --border-soft:#302a24;
+  --text:       #e8ddd4;
+  --text-2:     #b5a898;
+  --text-3:     #7a6e64;
+  --amber:      #e8a93c;
+  --amber-dim:  #a07520;
+  --sage:       #6ab584;
+  --sage-dim:   #3d7a52;
+  --sky:        #7ab0d4;
+  --rose:       #d47a7a;
+  --plum:       #a87ab4;
+
+  --best-bg:    rgba(106,181,132,.18);
+  --best-border:rgba(106,181,132,.45);
+  --good-bg:    rgba(122,176,212,.14);
+  --good-border:rgba(122,176,212,.35);
+  --avoid-bg:   rgba(212,122,122,.13);
+  --avoid-border:rgba(212,122,122,.32);
+
+  --hm-best:    #3d7a52;
+  --hm-good:    #3a6080;
+  --hm-avoid:   #7a3030;
+  --hm-neutral: #1e2d3a;
+  --rz-empty:   #0e2e24;
+  --rz-low:     #2d5040;
+  --rz-medium:  #5a4818;
+  --rz-high:    #6b2828;
+  --rz-danger:  #8b1c1c;
+  --rz-cta:     #5a2070;
+
+  --shadow:     0 2px 16px rgba(0,0,0,.45);
+  --shadow-lg:  0 8px 40px rgba(0,0,0,.6);
+
+  /* Day-of-week tag colors */
+  --tag-sun: rgba(232,169,60,.15);  --tag-sun-c: #e8a93c;
+  --tag-mon: rgba(106,181,132,.12); --tag-mon-c: #6ab584;
+  --tag-tue: rgba(122,176,212,.12); --tag-tue-c: #7ab0d4;
+  --tag-wed: rgba(168,122,180,.12); --tag-wed-c: #a87ab4;
+  --tag-thu: rgba(212,122,122,.12); --tag-thu-c: #d47a7a;
+  --tag-fri: rgba(232,169,60,.15);  --tag-fri-c: #e8c870;
+  --tag-sat: rgba(122,176,212,.18); --tag-sat-c: #a0d4f0;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(245,196,81,.07),transparent),radial-gradient(ellipse 50% 50% at 85% 85%,rgba(96,165,250,.04),transparent);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;}
-.wrapper{width:min(1500px,96%);margin:auto;padding:36px 0 90px;}
 
-/* HEADER */
-header{text-align:center;margin-bottom:36px;}
-h1{font-family:'Orbitron',sans-serif;font-size:clamp(20px,3.2vw,42px);font-weight:900;letter-spacing:.05em;line-height:1.15;margin-bottom:10px;}
-.gold{color:var(--gold);}
-.subtitle{color:var(--muted);font-size:12px;letter-spacing:.18em;text-transform:uppercase;}
+/* — LIGHT THEME — */
+[data-theme="light"] {
+  --ink:        #f5f0ea;
+  --ink-soft:   #ede6dc;
+  --surface:    #faf7f2;
+  --surface-2:  #f0ebe2;
+  --surface-3:  #e8e0d4;
+  --border:     #d4c9b8;
+  --border-soft:#dfd7c8;
+  --text:       #2a2218;
+  --text-2:     #5a4e3e;
+  --text-3:     #8a7a68;
+  --amber:      #b87a10;
+  --amber-dim:  #d4a040;
+  --sage:       #2a7a48;
+  --sage-dim:   #5aaa78;
+  --sky:        #2868a0;
+  --rose:       #a84040;
+  --plum:       #7a48a0;
 
-/* CARD */
-.card{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:20px;padding:22px;box-shadow:var(--shadow);}
-.card-title{display:flex;align-items:center;gap:9px;margin-bottom:14px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+  --best-bg:    rgba(42,122,72,.10);
+  --best-border:rgba(42,122,72,.30);
+  --good-bg:    rgba(40,104,160,.08);
+  --good-border:rgba(40,104,160,.25);
+  --avoid-bg:   rgba(168,64,64,.08);
+  --avoid-border:rgba(168,64,64,.25);
 
-/* TOP GRID */
-.top-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:24px;}
+  --hm-best:    #4aaa70;
+  --hm-good:    #4888c0;
+  --hm-avoid:   #cc5050;
+  --hm-neutral: #c4d4e4;
+  --rz-empty:   #a8d8c0;
+  --rz-low:     #80c8a8;
+  --rz-medium:  #e8c850;
+  --rz-high:    #e88060;
+  --rz-danger:  #d04040;
+  --rz-cta:     #9050c8;
 
-/* CLOCK */
-.clock-row{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:6px;}
-.utc-time{font-family:'Orbitron',sans-serif;font-size:clamp(32px,4.5vw,54px);font-weight:900;color:#fff;line-height:1;}
-.local-time-block{display:flex;flex-direction:column;gap:3px;}
-.local-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
-.local-time{font-family:'Share Tech Mono',monospace;font-size:20px;color:var(--gold);}
-.local-tz{font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;}
+  --shadow:     0 2px 12px rgba(0,0,0,.10);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.15);
 
-.server-status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin-top:6px;margin-bottom:16px;}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 2s infinite;}
-@keyframes pulse{50%{transform:scale(.6);opacity:.4;}}
+  --tag-sun: rgba(184,122,16,.15);  --tag-sun-c: #b87a10;
+  --tag-mon: rgba(42,122,72,.12);   --tag-mon-c: #2a7a48;
+  --tag-tue: rgba(40,104,160,.12);  --tag-tue-c: #2868a0;
+  --tag-wed: rgba(122,72,160,.12);  --tag-wed-c: #7a48a0;
+  --tag-thu: rgba(168,64,64,.12);   --tag-thu-c: #a84040;
+  --tag-fri: rgba(184,122,16,.15);  --tag-fri-c: #b87a10;
+  --tag-sat: rgba(40,104,160,.18);  --tag-sat-c: #2868a0;
+}
 
-/* TIMEZONE GRID - grouped */
-.tz-groups{display:flex;flex-direction:column;gap:10px;margin-top:6px;}
-.tz-group{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:14px;padding:10px 12px;}
-.tz-group-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.tz-group-clocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:6px;}
-.clock-box{padding:9px 10px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);position:relative;}
-.clock-box.is-local{border-color:rgba(245,196,81,.45);background:rgba(245,196,81,.05);}
-.clock-box.is-local::after{content:'YOU';position:absolute;top:5px;right:7px;font-size:8px;font-weight:700;color:var(--gold);letter-spacing:.1em;font-family:'Share Tech Mono',monospace;}
-.clock-box.is-selected{border-color:rgba(96,165,250,.7);background:rgba(96,165,250,.1);cursor:pointer;box-shadow:0 0 14px rgba(96,165,250,.25);}
-.clock-box.is-selected::after{content:'ACTIVE';position:absolute;top:5px;right:7px;font-size:8px;font-weight:700;color:var(--blue);letter-spacing:.1em;font-family:'Share Tech Mono',monospace;}
-.clock-box:not(.is-local){cursor:pointer;transition:border-color .18s,background .18s;}
-.clock-box:not(.is-local):hover{border-color:rgba(96,165,250,.4);background:rgba(96,165,250,.06);}
-.clock-box small{display:block;color:var(--muted);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px;}
-.clock-box .tz-countries{font-size:9px;color:rgba(92,122,158,.7);margin-bottom:4px;line-height:1.3;}
-.clock-box strong{font-size:13px;font-family:'Share Tech Mono',monospace;color:#fff;}
+--radius:     14px;
+--radius-sm:  8px;
 
-/* Selected TZ banner */
-#selectedTzBanner{display:none;margin-top:10px;padding:8px 13px;border-radius:10px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.35);font-size:12px;color:var(--blue);display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
-#selectedTzBanner span{font-family:'Share Tech Mono',monospace;}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
 
-/* DAY TOGGLE */
-.day-toggle{display:inline-flex;border-radius:10px;overflow:hidden;border:1px solid var(--border);margin-bottom:14px;}
-.day-toggle button{background:rgba(255,255,255,.04);border:none;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 20px;cursor:pointer;transition:all .2s;}
-.day-toggle button.active{background:var(--gold);color:#0a0e15;}
+body {
+  background: var(--ink);
+  background-image:
+    radial-gradient(ellipse 70% 30% at 50% 0%, rgba(232,169,60,.06), transparent),
+    radial-gradient(ellipse 40% 60% at 90% 90%, rgba(106,181,132,.03), transparent);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  transition: background .3s, color .3s;
+}
 
-/* SECTION */
-.section{margin-top:28px;}
-.section-title{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-.section-title h2{font-family:'Orbitron',sans-serif;font-size:17px;font-weight:700;letter-spacing:.06em;}
+/* ── Layout ── */
+.shell {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 0 16px 80px;
+}
 
-/* HOUR TRACK */
-.hour-track{display:flex;gap:2px;position:relative;padding-top:22px;}
-.hour-block{flex:1;min-width:0;height:34px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(255,255,255,.5);position:relative;cursor:default;transition:filter .18s,transform .15s;}
-.hour-block:hover{filter:brightness(1.45);transform:scaleY(1.1);z-index:3;}
-.hour-block.is-now{outline:2px solid var(--gold);outline-offset:1px;z-index:2;}
-.hour-block .pip{display:none;}
-.hour-block.is-now .pip{display:block;position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:8px;font-weight:700;color:var(--gold);white-space:nowrap;}
-.hour-block.is-now .pip::after{content:'';display:block;width:2px;height:7px;background:var(--gold);margin:1px auto 0;}
-.hour-block.cta-marker::after{content:'⚔';position:absolute;top:2px;font-size:8px;opacity:.85;}
-.hb-best    {background:rgba(45,122,82,.85);color:rgba(255,255,255,.85);}
-.hb-good    {background:rgba(70,110,180,.7);color:rgba(255,255,255,.8);}
-.hb-avoid   {background:rgba(130,40,40,.8);color:rgba(255,255,255,.8);}
-.hb-neutral {background:rgba(70,90,120,.28);color:rgba(255,255,255,.28);}
-.rz-empty  {background:var(--rz-empty);color:rgba(255,255,255,.2);}
-.rz-low    {background:var(--rz-low);color:rgba(255,255,255,.65);}
-.rz-medium {background:var(--rz-medium);color:rgba(255,255,255,.75);}
-.rz-high   {background:var(--rz-high);color:rgba(255,255,255,.85);}
-.rz-danger {background:var(--rz-danger);color:rgba(255,255,255,.9);}
-.rz-cta    {background:var(--rz-cta);color:rgba(255,255,255,.95);}
-.pop-low  {background:var(--col-low);color:rgba(255,255,255,.8);}
-.pop-mid  {background:var(--col-mid);color:rgba(255,255,255,.8);}
-.pop-high {background:var(--col-high);color:rgba(255,255,255,.8);}
-.pop-peak {background:var(--col-peak);color:rgba(255,255,255,.9);}
+/* ── Topbar ── */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-icon {
+  width: 34px; height: 34px;
+  background: var(--amber);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.brand-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+.brand-sub {
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.server-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--text-2);
+  font-family: 'DM Mono', monospace;
+}
+.pulse-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sage);
+  box-shadow: 0 0 8px var(--sage);
+  flex-shrink: 0;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.65)} }
 
-.track-axis{display:flex;justify-content:space-between;margin-top:4px;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:10px;padding-bottom:10px;}
-.bar-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;padding-bottom:12px;font-size:12px;}
-.leg-item{display:flex;align-items:center;gap:5px;}
-.leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+/* ── Theme Toggle ── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-2);
+  font-family: 'DM Mono', monospace;
+  transition: border-color .2s, background .2s;
+  user-select: none;
+}
+.theme-toggle:hover { border-color: var(--amber-dim); color: var(--amber); }
+.theme-icon { font-size: 14px; }
 
-/* HEATMAP SECTION */
-.heatmap-section{padding:12px 18px 0;}
-.heatmap-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
-.tag{padding:2px 8px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:.08em;}
-.tag-rz {background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3);}
-.tag-act{background:rgba(96,165,250,.12);color:var(--blue);border:1px solid rgba(96,165,250,.25);}
-.cta-banner{margin:10px 0 4px;padding:8px 12px;border-radius:10px;background:rgba(90,26,107,.18);border:1px solid rgba(192,132,252,.22);font-size:12px;color:var(--purple);display:flex;gap:8px;align-items:flex-start;line-height:1.55;}
-.cta-banner b{white-space:nowrap;color:#d8a0f8;}
-.rz-impact-note{font-size:11px;color:var(--muted);padding:4px 0 12px;line-height:1.5;}
+/* ── Hero: NOW Panel ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+@media (max-width: 700px) {
+  .hero { grid-template-columns: 1fr; }
+}
 
-/* ACTIVITY CARDS */
-.activities-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:20px;}
-.activity-card{background:linear-gradient(160deg,#0d1622,#0b1220);border:1px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);}
-.activity-top{padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,.05);}
-.activity-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.activity-name{display:flex;align-items:center;gap:11px;}
-.activity-icon{font-size:24px;}
-.activity-name h3{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;}
-.preference{color:var(--muted);font-size:11px;margin-top:3px;letter-spacing:.06em;text-transform:uppercase;}
-.live-badge{padding:5px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.1em;white-space:nowrap;text-transform:uppercase;font-family:'Share Tech Mono',monospace;}
-.badge-best  {background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.3);}
-.badge-good  {background:rgba(96,165,250,.12);color:var(--blue);border:1px solid rgba(96,165,250,.3);}
-.badge-avoid {background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3);}
-.badge-neutral{background:rgba(80,100,130,.12);color:var(--muted);border:1px solid rgba(80,100,130,.25);}
-.activity-body{padding:14px 20px 18px;}
-.window{border:1px solid rgba(255,255,255,.05);border-radius:12px;padding:11px;margin-bottom:8px;background:rgba(255,255,255,.02);}
-.window.active{border-color:rgba(245,196,81,.4);background:rgba(245,196,81,.04);}
-.window-top{display:flex;justify-content:space-between;gap:10px;margin-bottom:4px;}
-.window-title{font-weight:700;font-size:13px;}
-.window-time{color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:11px;}
-.window-local{color:var(--muted);font-size:11px;}
+.clock-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.clock-utc-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.clock-utc-time {
+  font-family: 'Oxanium', sans-serif;
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 700;
+  color: var(--amber);
+  line-height: 1;
+  margin-bottom: 10px;
+  letter-spacing: .04em;
+}
+.clock-local-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.clock-local-flag { font-size: 16px; }
+.clock-local-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  color: var(--text);
+}
+.clock-local-tz {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+}
+.day-info {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: .05em;
+}
+.day-info strong { color: var(--amber); }
 
-/* RZ CARD */
-.rz-card{background:linear-gradient(160deg,#120d1e,#0f0d1a);border:1px solid rgba(139,26,139,.22);border-radius:20px;padding:22px;box-shadow:var(--shadow);margin-top:28px;}
-.rz-card .card-title{color:var(--purple);}
-.rz-note{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:14px;}
-.rz-note b{color:var(--text);}
+/* Now panel */
+.now-hero-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 3px; height: 12px;
+  background: var(--amber);
+  border-radius: 2px;
+}
+.now-empty {
+  color: var(--text-3);
+  font-size: 13px;
+  font-style: italic;
+  padding: 16px 0;
+}
+.now-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  transition: border-color .2s;
+}
+.now-item.status-best { border-color: var(--best-border); background: var(--best-bg); }
+.now-item.status-good { border-color: var(--good-border); background: var(--good-bg); }
+.now-icon { font-size: 18px; flex-shrink: 0; }
+.now-info { flex: 1; min-width: 0; }
+.now-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.now-detail {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  margin-top: 1px;
+}
+.now-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-best  { background: rgba(106,181,132,.2); color: var(--sage); border: 1px solid rgba(106,181,132,.4); }
+.badge-good  { background: rgba(122,176,212,.15); color: var(--sky); border: 1px solid rgba(122,176,212,.3); }
+.badge-avoid { background: rgba(212,122,122,.12); color: var(--rose); border: 1px solid rgba(212,122,122,.28); }
+.badge-neutral{ background: rgba(122,110,100,.15); color: var(--text-3); border: 1px solid rgba(122,110,100,.2); }
 
-/* NOW PANEL */
-.now-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.now-card{padding:16px;border-radius:17px;border:1px solid var(--border);background:linear-gradient(160deg,#101826,#131c2d);}
-.now-card.best{border-color:rgba(74,222,128,.3);}
-.now-card.good{border-color:rgba(96,165,250,.3);}
-.now-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.now-card h3{font-size:14px;font-family:'Orbitron',sans-serif;letter-spacing:.04em;}
-.next-window{margin-top:5px;color:var(--muted);font-size:11px;font-family:'Share Tech Mono',monospace;}
+/* ── Section wrapper ── */
+.section { margin-bottom: 12px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-note {
+  font-size: 11px;
+  color: var(--text-3);
+  max-width: 480px;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
 
-.hour-block-tooltip{position:fixed;z-index:9999;background:#0d1520;border:1px solid rgba(245,196,81,.5);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'Share Tech Mono',monospace;font-size:12px;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.7);min-width:160px;}
-.hour-block-tooltip .tt-utc{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
-.hour-block-tooltip .tt-local{color:var(--gold);font-size:16px;font-weight:700;margin-bottom:2px;}
-.hour-block-tooltip .tt-tz{color:var(--muted);font-size:10px;}
-.hour-block{cursor:pointer;}
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 0;
+}
 
-footer{margin-top:50px;text-align:center;color:var(--muted);font-size:13px;}
-footer strong{color:var(--gold);}
+/* ── Day Picker (7-day selector) ── */
+.day-picker {
+  display: inline-flex;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+}
+.day-picker button {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-soft);
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: all .18s;
+  white-space: nowrap;
+  position: relative;
+}
+.day-picker button:last-child { border-right: none; }
+.day-picker button.active {
+  background: var(--amber);
+  color: var(--ink);
+  font-weight: 700;
+}
+.day-picker button.is-today::after {
+  content: '•';
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: var(--sage);
+  line-height: 1;
+}
+.day-picker button.active.is-today::after { color: var(--ink); }
+
+/* forecast nav */
+.forecast-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+.forecast-nav button {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: all .15s;
+}
+.forecast-nav button:hover { border-color: var(--amber-dim); color: var(--amber); }
+.forecast-nav .forecast-label {
+  font-size: 10px;
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .06em;
+  flex: 1;
+  text-align: center;
+}
+
+/* ── Hour Track ── */
+.track-wrap { overflow: hidden; }
+.hour-track {
+  display: flex;
+  gap: 2px;
+  padding-top: 20px;
+  position: relative;
+}
+.hour-block {
+  flex: 1;
+  min-width: 0;
+  height: 30px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  color: rgba(255,255,255,.35);
+  position: relative;
+  cursor: pointer;
+  transition: filter .15s, transform .12s;
+}
+[data-theme="light"] .hour-block { color: rgba(0,0,0,.35); }
+.hour-block:hover { filter: brightness(1.2); transform: scaleY(1.1); z-index:3; }
+.hour-block.is-now {
+  outline: 2px solid var(--amber);
+  outline-offset: 1px;
+  z-index: 2;
+}
+.hour-block .pip { display: none; }
+.hour-block.is-now .pip {
+  display: block;
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--amber);
+  white-space: nowrap;
+}
+.hour-block.is-now .pip::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 6px;
+  background: var(--amber);
+  margin: 2px auto 0;
+}
+.hour-block.cta-marker::after {
+  content: '⚔';
+  position: absolute;
+  top: 2px;
+  font-size: 7px;
+  opacity: .8;
+}
+
+/* Hour block states */
+.hb-best    { background: var(--hm-best); color: rgba(255,255,255,.75); }
+.hb-good    { background: var(--hm-good); color: rgba(255,255,255,.7); }
+.hb-avoid   { background: var(--hm-avoid); color: rgba(255,255,255,.65); }
+.hb-neutral { background: var(--hm-neutral); }
+.pop-low    { background: #2d5040; }
+.pop-mid    { background: #5a4818; }
+.pop-high   { background: #6b3a18; }
+.pop-peak   { background: #6b2060; }
+.rz-empty   { background: var(--rz-empty); }
+.rz-low     { background: var(--rz-low); }
+.rz-medium  { background: var(--rz-medium); color: rgba(255,255,255,.6); }
+.rz-high    { background: var(--rz-high); color: rgba(255,255,255,.75); }
+.rz-danger  { background: var(--rz-danger); color: rgba(255,255,255,.85); }
+.rz-cta     { background: var(--rz-cta); color: rgba(255,255,255,.9); }
+
+[data-theme="light"] .pop-low  { background: #80c8a8; color: #1a3a2a; }
+[data-theme="light"] .pop-mid  { background: #e8c850; color: #3a2800; }
+[data-theme="light"] .pop-high { background: #e8a060; color: #3a1800; }
+[data-theme="light"] .pop-peak { background: #c870b8; color: #fff; }
+[data-theme="light"] .hb-best  { background: var(--hm-best); }
+[data-theme="light"] .hb-good  { background: var(--hm-good); }
+[data-theme="light"] .hb-avoid { background: var(--hm-avoid); }
+[data-theme="light"] .hb-neutral { background: var(--hm-neutral); }
+
+.track-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  padding-bottom: 8px;
+}
+.bar-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+.leg-item { display: flex; align-items: center; gap: 5px; }
+.leg-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+
+/* ── Pop + RZ side-by-side on desktop ── */
+.data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+@media (max-width: 700px) {
+  .data-grid { grid-template-columns: 1fr; }
+}
+
+/* ── TZ Selector — always-visible flag tab strip ── */
+.tz-selector-wrap {
+  margin-top: 14px;
+}
+.tz-selector-label {
+  font-size: 9px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  margin-bottom: 6px;
+}
+.tz-tab-strip-outer {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.tz-tab-strip-outer::-webkit-scrollbar { display: none; }
+.tz-group-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.tz-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  padding: 4px 7px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  white-space: nowrap;
+  min-width: 40px;
+  position: relative;
+}
+.tz-tab:hover { background: rgba(232,169,60,.07); border-color: rgba(232,169,60,.4); }
+.tz-tab.is-selected { background: var(--amber); border-color: var(--amber); }
+.tz-tab.is-local-tz::after {
+  content: '•';
+  position: absolute;
+  bottom: 2px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 6px;
+  color: var(--sage);
+  line-height: 1;
+}
+.tz-tab.is-selected.is-local-tz::after { color: var(--ink); opacity: .7; }
+.tz-tab-flag  { font-size: 13px; line-height: 1.1; }
+.tz-tab-abbr  {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--text-3);
+  text-transform: uppercase;
+}
+.tz-tab.is-selected .tz-tab-abbr { color: var(--ink); font-weight: 700; }
+.tz-tab:not(.is-selected):hover .tz-tab-abbr { color: var(--amber); }
+.tz-active-banner {
+  display: none;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  background: rgba(122,176,212,.1);
+  border: 1px solid rgba(122,176,212,.3);
+  font-size: 11px;
+  color: var(--sky);
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tz-active-banner button {
+  background: none;
+  border: 1px solid rgba(122,176,212,.3);
+  color: var(--sky);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ── Tooltip ── */
+.hour-block-tooltip {
+  position: fixed;
+  z-index: 9999;
+  background: var(--surface-3);
+  border: 1px solid rgba(232,169,60,.45);
+  border-radius: var(--radius-sm);
+  padding: 9px 13px;
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  pointer-events: none;
+  box-shadow: var(--shadow-lg);
+  min-width: 145px;
+}
+.tt-utc { color: var(--text-3); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 3px; }
+.tt-local { color: var(--amber); font-size: 15px; font-weight: 500; margin-bottom: 1px; }
+.tt-tz { color: var(--text-3); font-size: 9px; }
+
+/* ── Activities ── */
+.act-tab-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.act-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-3);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .18s;
+  white-space: nowrap;
+}
+.act-tab-btn:hover { border-color: var(--amber-dim); color: var(--text-2); }
+.act-tab-btn.active {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--ink);
+  font-weight: 700;
+}
+.act-tab-btn .act-tab-icon { font-size: 15px; }
+.act-tab-btn .act-tab-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.act-tab-btn.active .act-tab-badge { background: rgba(0,0,0,.18); color: var(--ink); }
+.act-tab-btn:not(.active) .badge-best  { background:rgba(106,181,132,.2); color:var(--sage); border:1px solid rgba(106,181,132,.35); }
+.act-tab-btn:not(.active) .badge-good  { background:rgba(122,176,212,.15); color:var(--sky); border:1px solid rgba(122,176,212,.3); }
+.act-tab-btn:not(.active) .badge-avoid { background:rgba(212,122,122,.12); color:var(--rose); border:1px solid rgba(212,122,122,.25); }
+.act-tab-btn:not(.active) .badge-neutral{ background:rgba(122,110,100,.1); color:var(--text-3); border:1px solid rgba(122,110,100,.2); }
+
+.act-tab-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.activity-top {
+  padding: 0 0 14px 0;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 16px;
+}
+.activity-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.activity-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.activity-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-3);
+  border-radius: 8px;
+}
+.activity-name h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.activity-prefer {
+  font-size: 10px;
+  color: var(--text-3);
+  margin-top: 2px;
+  letter-spacing: .04em;
+}
+.live-badge {
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.heatmap-section { padding: 12px 0 0 0; }
+.heatmap-section-inner {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px 8px;
+  margin-bottom: 8px;
+}
+.heatmap-label {
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tag {
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .07em;
+}
+.tag-rz  { background:rgba(212,122,122,.12); color:var(--rose); border:1px solid rgba(212,122,122,.25); }
+.tag-act { background:rgba(232,169,60,.1); color:var(--amber); border:1px solid rgba(232,169,60,.25); }
+
+/* Day-of-week tags */
+.tag-day { border: 1px solid currentColor; }
+.tag-sun { background: var(--tag-sun); color: var(--tag-sun-c); border-color: var(--tag-sun-c); }
+.tag-mon { background: var(--tag-mon); color: var(--tag-mon-c); border-color: var(--tag-mon-c); }
+.tag-tue { background: var(--tag-tue); color: var(--tag-tue-c); border-color: var(--tag-tue-c); }
+.tag-wed { background: var(--tag-wed); color: var(--tag-wed-c); border-color: var(--tag-wed-c); }
+.tag-thu { background: var(--tag-thu); color: var(--tag-thu-c); border-color: var(--tag-thu-c); }
+.tag-fri { background: var(--tag-fri); color: var(--tag-fri-c); border-color: var(--tag-fri-c); }
+.tag-sat { background: var(--tag-sat); color: var(--tag-sat-c); border-color: var(--tag-sat-c); }
+
+.cta-banner {
+  margin: 10px 0 4px;
+  padding: 8px 11px;
+  border-radius: var(--radius-sm);
+  background: rgba(168,122,180,.1);
+  border: 1px solid rgba(168,122,180,.22);
+  font-size: 11px;
+  color: var(--plum);
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+.cta-banner b { white-space: nowrap; color: #c8a0d8; }
+[data-theme="light"] .cta-banner b { color: #7a40a8; }
+
+/* CTA hidden tooltip — shown via info icon */
+.cta-info-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 4px;
+  position: relative;
+}
+.cta-info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(168,122,180,.15);
+  border: 1px solid rgba(168,122,180,.35);
+  color: var(--plum);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background .15s, border-color .15s;
+  user-select: none;
+}
+.cta-info-btn:hover {
+  background: rgba(168,122,180,.28);
+  border-color: rgba(168,122,180,.6);
+}
+.cta-info-label {
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: .06em;
+  font-family: 'DM Mono', monospace;
+}
+.cta-tooltip-popover {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  border: 1px solid rgba(168,122,180,.38);
+  box-shadow: var(--shadow-lg);
+  font-size: 11px;
+  color: var(--plum);
+  line-height: 1.55;
+  pointer-events: auto;
+}
+.cta-tooltip-popover b { color: #c8a0d8; white-space: nowrap; }
+[data-theme="light"] .cta-tooltip-popover b { color: #7a40a8; }
+.cta-tooltip-popover.is-open { display: block; }
+.rz-impact-note {
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.55;
+  padding: 4px 0 10px;
+}
+
+.activity-body {
+  padding: 4px 0 0 0;
+  flex: 1;
+}
+
+/* Day-of-week tab row (7 tabs) */
+.tab-row-7 {
+  display: flex;
+  gap: 0;
+  margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.tab-btn-7 {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--border-soft);
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 6px 4px;
+  cursor: pointer;
+  transition: all .18s;
+  position: relative;
+}
+.tab-btn-7:last-child { border-right: none; }
+.tab-btn-7.active {
+  background: var(--amber);
+  color: var(--ink);
+  font-weight: 700;
+}
+.tab-btn-7.is-today::after {
+  content: '•';
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: var(--sage);
+  line-height: 1;
+}
+.tab-btn-7.active.is-today::after { color: var(--ink); }
+
+/* Forecast nav for activity */
+.act-forecast-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+}
+.act-forecast-nav button {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: all .15s;
+}
+.act-forecast-nav button:hover { border-color: var(--amber-dim); color: var(--amber); }
+.act-forecast-label {
+  flex: 1;
+  font-size: 10px;
+  color: var(--text-3);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .06em;
+  text-align: center;
+}
+
+/* Window items */
+.window {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  background: var(--surface-2);
+  transition: border-color .18s;
+}
+.window.active { border-color: rgba(232,169,60,.4); background: rgba(232,169,60,.05); }
+.window-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+.window-title { font-weight: 600; font-size: 13px; color: var(--text); }
+.window-time {
+  color: var(--amber);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  margin-top: 2px;
+}
+.window-local {
+  color: var(--text-3);
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.window-local-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.window-local-sep {
+  color: var(--border);
+  font-size: 9px;
+}
+
+/* ── Redzone standalone card ── */
+.rz-card {
+  background: var(--surface);
+  border: 1px solid rgba(168,122,180,.25);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+}
+
+/* ── Footer ── */
+footer {
+  margin-top: 48px;
+  text-align: center;
+  color: var(--text-3);
+  font-size: 12px;
+  padding-bottom: 20px;
+}
+footer strong { color: var(--amber); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Inclusive Design: focus states ── */
+button:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* ── Transition for theme changes ── */
+body, .card, .clock-card, .now-hero-card, .rz-card, .act-tab-panel,
+.surface, .window, .clock-box, .now-item {
+  transition: background .25s, border-color .25s, color .2s;
+}
 </style>
 </head>
 <body>
-<div class="wrapper">
+<div class="shell">
 
-<header>
-  <h1><span class="gold">Albion Online</span><br>Asia Activity Assistant</h1>
-  <div class="subtitle">Auto Local Time · Redzone Heatmap · CTA Tracker · Weekday vs Weekend</div>
-</header>
-
-<div class="top-grid">
-
-  <!-- LEFT: CLOCK + POP -->
-  <div class="card">
-    <div class="card-title">🕒 Live Time</div>
-
-    <div class="clock-row">
-      <div>
-        <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">UTC / SERVER</div>
-        <div class="utc-time" id="utcClock">00:00:00</div>
-      </div>
-      <div class="local-time-block">
-        <div class="local-label">Your Local <span id="localCountryFlag"></span></div>
-        <div class="local-time" id="localClock">--:--:--</div>
-        <div class="local-tz" id="localTzLabel">Detecting…</div>
-      </div>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-icon">⚔️</div>
+    <div>
+      <div class="brand-name">Albion Online · Asia</div>
+      <div class="brand-sub">Activity Guide &amp; Timing Assistant</div>
     </div>
-
-    <div class="server-status">
-      <div class="dot"></div>
+  </div>
+  <div class="topbar-right">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">
+      <span class="theme-icon" id="themeIcon">🌙</span>
+      <span id="themeLabel">Dark</span>
+    </button>
+    <div class="server-pill">
+      <div class="pulse-dot"></div>
       Asia Server Online &nbsp;·&nbsp; <span id="dayLabel">—</span>
     </div>
+  </div>
+</div>
 
-    <!-- GROUPED TIMEZONE CLOCKS with toggle -->
-    <div style="margin-top:12px;">
-      <button id="tzToggleBtn" onclick="toggleTzPanel()" style="background:rgba(245,196,81,.12);border:1px solid rgba(245,196,81,.35);color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;">
-        <span id="tzToggleIcon">▼</span> Show Asia Time Zones
-      </button>
-      <div style="font-size:10px;color:var(--muted);margin-top:5px;letter-spacing:.08em;">Tap any zone to use it as your local time</div>
-      <div id="tzGroups" style="display:none;margin-top:10px;"></div>
-      <div id="selectedTzBanner">
-        <span id="selectedTzText">Viewing as: —</span>
+<!-- HERO: CLOCK + WHAT TO DO NOW -->
+<div class="hero">
+
+  <!-- Clock -->
+  <div class="clock-card">
+    <div class="clock-utc-label">UTC / Server Time</div>
+    <div class="clock-utc-time" id="utcClock">00:00:00</div>
+    <div class="clock-local-row">
+      <div class="clock-local-flag" id="localCountryFlag"></div>
+      <div>
+        <div class="clock-local-time" id="localClock">--:--</div>
+        <div class="clock-local-tz" id="localTzLabel">Detecting…</div>
       </div>
     </div>
+    <div class="day-info" id="dayInfo">—</div>
 
-    <!-- POP BAR -->
-    <div style="margin-top:18px;">
-      <div class="card-title" style="margin-bottom:10px;">📊 Server Population — UTC Hour</div>
-      <div class="day-toggle" id="globalDayToggle">
-        <button onclick="manualToggleDay('globalDay','weekday',this,'globalDayToggle')">Weekday</button>
-        <button onclick="manualToggleDay('globalDay','weekend',this,'globalDayToggle')">Weekend</button>
+    <!-- TZ Selector — always-visible flag tab strip -->
+    <div class="tz-selector-wrap">
+      <div class="tz-selector-label">Local Time Zone</div>
+      <div class="tz-tab-strip-outer" id="tzGroups"></div>
+      <div class="tz-active-banner" id="selectedTzBanner">
+        <span id="selectedTzText">Viewing as: —</span>
+        <button onclick="resetSelectedTz()">Reset</button>
       </div>
+    </div>
+  </div>
+
+  <!-- What to do NOW -->
+  <div class="now-hero-card">
+    <div class="section-label">Best Right Now</div>
+    <div id="nowGrid"></div>
+  </div>
+
+</div>
+
+<!-- POPULATION + REDZONE DATA -->
+<div class="data-grid">
+
+  <div class="card section">
+    <div class="section-header">
+      <div class="section-title">📊 Server Population</div>
+      <div id="popDayPickerWrap"></div>
+    </div>
+    <div class="track-wrap">
       <div class="hour-track" id="globalPopBar"></div>
       <div class="track-axis"><span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span></div>
-      <div class="bar-legend">
-        <div class="leg-item"><div class="leg-dot" style="background:var(--col-low)"></div>Low</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--col-mid)"></div>Medium</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--col-high)"></div>High</div>
-        <div class="leg-item"><div class="leg-dot" style="background:var(--col-peak)"></div>Peak</div>
-      </div>
+    </div>
+    <div class="bar-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#2d5040"></div>Low</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#5a4818"></div>Medium</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#6b3a18"></div>High</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#6b2060"></div>Peak</div>
     </div>
   </div>
 
+  <div class="rz-card section">
+    <div class="section-header">
+      <div class="section-title">🔴 Redzone Density</div>
+      <div id="rzDayPickerWrap"></div>
+    </div>
+    <div class="section-note">Purple ⚔ = CTA active — guilds flood black zones, redzones become <strong>paradoxically safer</strong> during these windows.</div>
+    <div class="track-wrap">
+      <div class="hour-track" id="rzGlobalBar"></div>
+      <div class="track-axis"><span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span></div>
+    </div>
+    <div class="bar-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--rz-empty)"></div>Very Low</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--rz-low)"></div>Low</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--rz-medium)"></div>Medium</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--rz-high)"></div>High</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--rz-danger)"></div>Danger</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--rz-cta)"></div>CTA ⚔</div>
+    </div>
+  </div>
 
 </div>
 
-<!-- REDZONE OVERVIEW -->
-<div class="rz-card">
-  <div class="card-title">🔴 Redzone Roaming Density — Asia Server</div>
-  <div class="rz-note">
-    Estimated players <b>actively roaming redzones</b> per UTC hour.
-    <b>Purple ⚔ blocks = CTA / Territory War windows</b> — guilds flood black zones,
-    so redzones become <b>paradoxically emptier and safer</b> while BZ roads become <b>extremely dangerous</b>.
-    Weekday vs Weekend curves differ significantly.
-  </div>
-  <div class="day-toggle" id="rzDayToggle">
-    <button onclick="manualToggleDay('rzDay','weekday',this,'rzDayToggle')">Weekday</button>
-    <button onclick="manualToggleDay('rzDay','weekend',this,'rzDayToggle')">Weekend</button>
-  </div>
-  <div class="hour-track" id="rzGlobalBar"></div>
-  <div class="track-axis"><span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span></div>
-  <div class="bar-legend">
-    <div class="leg-item"><div class="leg-dot" style="background:var(--rz-empty)"></div>Very Low</div>
-    <div class="leg-item"><div class="leg-dot" style="background:var(--rz-low)"></div>Low</div>
-    <div class="leg-item"><div class="leg-dot" style="background:var(--rz-medium)"></div>Medium</div>
-    <div class="leg-item"><div class="leg-dot" style="background:var(--rz-high)"></div>High</div>
-    <div class="leg-item"><div class="leg-dot" style="background:var(--rz-danger)"></div>Danger</div>
-    <div class="leg-item"><div class="leg-dot" style="background:var(--rz-cta)"></div>CTA ⚔ (BZ flooded, RZ emptier)</div>
-  </div>
-</div>
-
-<!-- NOW PANEL -->
+<!-- ACTIVITY TABS -->
 <div class="section">
-  <div class="section-title"><h2>⚡ Best Activities Right Now</h2></div>
-  <div class="now-grid" id="nowGrid"></div>
-</div>
-
-<!-- ACTIVITIES -->
-<div class="section">
-  <div class="section-title"><h2>📋 Guild Activity Schedule + Redzone Heatmap</h2></div>
-  <div class="activities-grid" id="activitiesGrid"></div>
+  <div class="section-header" style="margin-bottom:12px;">
+    <div class="section-title">📋 Activity Schedule + Heatmaps</div>
+  </div>
+  <div class="act-tab-bar" id="actTabBar"></div>
+  <div class="act-tab-panel" id="actTabPanel"></div>
 </div>
 
 <footer>Made by <strong>PritongPUSA</strong> · Albion Online · Asia Server</footer>
-</div>
+
+</div><!-- /shell -->
 
 <script>
 /* ══════════════════════════════════════
-   TIMEZONE DATA — grouped by region / shared offset
+   TIMEZONE DATA
 ══════════════════════════════════════ */
 const TZ_GROUPS = [
-  {
-    group: 'UTC / Reference',
-    zones: [
-      { abbr:'UTC', tz:'UTC', flag:'🌐', countries:'Universal Coordinated Time', offset:'+00:00' },
-    ]
-  },
-  {
-    group: 'Southeast Asia — UTC+7',
-    zones: [
-      { abbr:'WIB',  tz:'Asia/Jakarta',   flag:'🇮🇩', countries:'Indonesia (Java, Sumatra, West Kalimantan)', offset:'+07:00' },
-      { abbr:'ICT',  tz:'Asia/Bangkok',   flag:'🇹🇭', countries:'Thailand · Vietnam · Laos · Cambodia', offset:'+07:00' },
-    ]
-  },
-  {
-    group: 'Southeast Asia — UTC+8',
-    zones: [
-      { abbr:'PHT',  tz:'Asia/Manila',    flag:'🇵🇭', countries:'Philippines', offset:'+08:00' },
-      { abbr:'MYT',  tz:'Asia/Kuala_Lumpur', flag:'🇲🇾', countries:'Malaysia · Singapore · Brunei', offset:'+08:00' },
-      { abbr:'WITA', tz:'Asia/Makassar',  flag:'🇮🇩', countries:'Indonesia (Bali, Sulawesi, Central)', offset:'+08:00' },
-      { abbr:'CST',  tz:'Asia/Shanghai',  flag:'🇨🇳', countries:'China · Taiwan · Hong Kong · Macau', offset:'+08:00' },
-    ]
-  },
-  {
-    group: 'East Asia — UTC+9',
-    zones: [
-      { abbr:'JST',  tz:'Asia/Tokyo',     flag:'🇯🇵', countries:'Japan', offset:'+09:00' },
-      { abbr:'KST',  tz:'Asia/Seoul',     flag:'🇰🇷', countries:'South Korea · North Korea', offset:'+09:00' },
-      { abbr:'WIT',  tz:'Asia/Jayapura',  flag:'🇮🇩', countries:'Indonesia (Papua, East)', offset:'+09:00' },
-    ]
-  },
-  {
-    group: 'South Asia — UTC+5:30',
-    zones: [
-      { abbr:'IST',  tz:'Asia/Kolkata',   flag:'🇮🇳', countries:'India · Sri Lanka', offset:'+05:30' },
-    ]
-  },
-  {
-    group: 'Australia — UTC+8 to +11',
-    zones: [
-      { abbr:'AWST', tz:'Australia/Perth',   flag:'🇦🇺', countries:'Australia — Western (Perth)', offset:'+08:00' },
-      { abbr:'ACST', tz:'Australia/Darwin',  flag:'🇦🇺', countries:'Australia — Northern Territory', offset:'+09:30' },
-      { abbr:'AEST', tz:'Australia/Brisbane',flag:'🇦🇺', countries:'Australia — Queensland (Brisbane)', offset:'+10:00' },
-      { abbr:'AEDT', tz:'Australia/Sydney',  flag:'🇦🇺', countries:'Australia — NSW, VIC, ACT, TAS (Sydney, Melbourne)', offset:'+10:00/+11:00' },
-    ]
-  },
-  {
-    group: 'Europe / Middle East',
-    zones: [
-      { abbr:'CET',  tz:'Europe/Berlin',  flag:'🇪🇺', countries:'Central Europe (Germany, France, Poland…)', offset:'+01:00/+02:00' },
-      { abbr:'EET',  tz:'Europe/Helsinki',flag:'🇪🇺', countries:'Eastern Europe (Finland, Greece, Romania…)', offset:'+02:00/+03:00' },
-      { abbr:'GST',  tz:'Asia/Dubai',     flag:'🇦🇪', countries:'UAE · Oman', offset:'+04:00' },
-    ]
-  },
-  {
-    group: 'Americas',
-    zones: [
-      { abbr:'EST',  tz:'America/New_York',    flag:'🇺🇸', countries:'US Eastern (New York, Miami)', offset:'-05:00/-04:00' },
-      { abbr:'CST',  tz:'America/Chicago',     flag:'🇺🇸', countries:'US Central (Chicago, Dallas)', offset:'-06:00/-05:00' },
-      { abbr:'PST',  tz:'America/Los_Angeles', flag:'🇺🇸', countries:'US Pacific (LA, Seattle)', offset:'-08:00/-07:00' },
-    ]
-  },
+  { group:'Asia & Australia', zones:[
+    { abbr:'IST',  tz:'Asia/Kolkata',       flag:'🇮🇳', countries:'India · Sri Lanka',                         offset:'+05:30' },
+    { abbr:'WIB',  tz:'Asia/Jakarta',       flag:'🇮🇩', countries:'Indonesia (Java, Sumatra, West Kalimantan)', offset:'+07:00' },
+    { abbr:'ICT',  tz:'Asia/Bangkok',       flag:'🇹🇭', countries:'Thailand · Vietnam · Laos · Cambodia',       offset:'+07:00' },
+    { abbr:'PHT',  tz:'Asia/Manila',        flag:'🇵🇭', countries:'Philippines',                                offset:'+08:00' },
+    { abbr:'MYT',  tz:'Asia/Kuala_Lumpur',  flag:'🇲🇾', countries:'Malaysia · Singapore · Brunei',              offset:'+08:00' },
+    { abbr:'WITA', tz:'Asia/Makassar',      flag:'🇮🇩', countries:'Indonesia (Bali, Sulawesi, Central)',        offset:'+08:00' },
+    { abbr:'CST',  tz:'Asia/Shanghai',      flag:'🇨🇳', countries:'China · Taiwan · Hong Kong · Macau',         offset:'+08:00' },
+    { abbr:'AWST', tz:'Australia/Perth',    flag:'🇦🇺', countries:'Australia — Western (Perth)',                offset:'+08:00' },
+    { abbr:'JST',  tz:'Asia/Tokyo',         flag:'🇯🇵', countries:'Japan',                                      offset:'+09:00' },
+    { abbr:'KST',  tz:'Asia/Seoul',         flag:'🇰🇷', countries:'South Korea',                                offset:'+09:00' },
+    { abbr:'WIT',  tz:'Asia/Jayapura',      flag:'🇮🇩', countries:'Indonesia (Papua, East)',                    offset:'+09:00' },
+    { abbr:'ACST', tz:'Australia/Darwin',   flag:'🇦🇺', countries:'Australia — Northern Territory',             offset:'+09:30' },
+    { abbr:'AEST', tz:'Australia/Brisbane', flag:'🇦🇺', countries:'Australia — Queensland (Brisbane)',          offset:'+10:00' },
+    { abbr:'AEDT', tz:'Australia/Sydney',   flag:'🇦🇺', countries:'Australia — NSW, VIC, ACT, TAS',            offset:'+10:00/+11:00' },
+  ]},
 ];
-
-// Flat list for quick lookup
-const ALL_ZONES = TZ_GROUPS.flatMap(g => g.zones.map(z => ({...z, group: g.group})));
+const ALL_ZONES = TZ_GROUPS.flatMap(g => g.zones.map(z => ({...z, group:g.group})));
 
 /* ══════════════════════════════════════
-   POPULATION + REDZONE DATA
+   PER-DAY DATA (Sun=0 … Sat=6)
 ══════════════════════════════════════ */
-const POP = {
-  // Weekday: ramp starts ~UTC 08, peak 11-14, fade evening
-  weekday:['low','low','low','low','mid','mid','mid','mid','high','high','high','peak','peak','peak','high','high','mid','mid','low','low','low','low','low','low'],
-  // Weekend: players sleep in — ramp starts UTC 06, peak is wider (09–17), stays high into evening, night drop later
-  weekend:['low','low','low','low','low','low','mid','mid','high','peak','peak','peak','peak','peak','peak','peak','high','high','mid','mid','low','low','low','low'],
+// Population: 0=Sun,1=Mon,...,6=Sat
+const POP_BY_DAY = {
+  0: ['low','low','low','low','low','low','mid','mid','high','peak','peak','peak','peak','peak','peak','peak','high','high','mid','mid','low','low','low','low'], // Sun — free day, late night gamers
+  1: ['low','low','low','low','mid','mid','mid','mid','high','high','high','peak','peak','peak','high','high','mid','mid','low','low','low','low','low','low'], // Mon — workday
+  2: ['low','low','low','low','mid','mid','mid','mid','high','high','high','peak','peak','peak','high','high','mid','mid','low','low','low','low','low','low'], // Tue
+  3: ['low','low','low','low','mid','mid','mid','mid','high','high','high','peak','peak','peak','high','high','mid','mid','low','low','low','low','low','low'], // Wed
+  4: ['low','low','low','low','mid','mid','mid','mid','high','high','peak','peak','peak','peak','high','high','mid','mid','mid','low','low','low','low','low'], // Thu — slight ramp
+  5: ['low','low','low','low','low','mid','mid','high','high','peak','peak','peak','peak','peak','peak','high','high','peak','peak','mid','mid','low','low','low'], // Fri — TGIF, stay late
+  6: ['low','low','low','low','low','low','mid','high','high','peak','peak','peak','peak','peak','peak','peak','high','high','mid','mid','low','low','low','low'], // Sat — weekend peak
 };
-const RZ = {
-  // Weekday: gankers online UTC 06-21, CTA typically 11-12 and 18-19
-  weekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
-  // Weekend: gankers start earlier (UTC 07), more CTA events, peak danger wider, red zone stays hot until 22
-  weekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
+// Redzone: same 7-day split
+const RZ_BY_DAY = {
+  0: ['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'], // Sun
+  1: ['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'], // Mon
+  2: ['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'], // Tue
+  3: ['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'], // Wed
+  4: ['empty','empty','empty','low','low','low','medium','medium','high','high','cta','cta','danger','danger','high','high','medium','medium','cta','cta','high','medium','low','empty'], // Thu
+  5: ['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','high','cta','cta','danger','danger','high','high','medium','low'], // Fri
+  6: ['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'], // Sat
 };
 
-const activities = [
-  {
-    icon:'🏕️', title:'Small Camp Clearing', prefer:'Best During Low Population',
-    rzImpact:'Lower RZ density = fewer interrupters while you clear. Very Low/Low = ideal. Danger = very risky solo. Weekends: gankers online from UTC 07 — avoid solo 09–22 on weekends.',
-    ctaNote:'During CTA windows players pull into black zones — redzones drain temporarily. On weekends, multiple CTA windows occur (UTC 09–10, 12–13, 17–18) — these are your bonus solo windows mid-day.',
-    windowsWeekday:[
-      {label:'Dawn Sweep',    start:0,  end:4,  status:'best'},
-      {label:'Morning Raid',  start:4,  end:7,  status:'good'},
-      {label:'Prime Danger',  start:9,  end:17, status:'avoid'},
-      {label:'Late Night',    start:21, end:24, status:'best'},
+// Activity windows per day (0=Sun … 6=Sat)
+// Sun/Sat = free days; Fri = night-owl; Mon-Thu = standard workday
+const ACT_WINDOWS_BY_DAY = {
+  smallCamp: {
+    0: [ // Sun — full free day
+      {label:'Dead Hour Clear',   start:0,  end:5,  status:'best'},
+      {label:'Early Morning',     start:5,  end:7,  status:'good'},
+      {label:'Pre-Ganker',        start:7,  end:9,  status:'good'},
+      {label:'Full Danger Zone',  start:9,  end:21, status:'avoid'},
+      {label:'Late Night Safe',   start:21, end:24, status:'best'},
     ],
-    windowsWeekend:[
-      {label:'Dead Hour Clear',  start:0,  end:5,  status:'best'},
-      {label:'Early Morning',    start:5,  end:7,  status:'good'},
-      {label:'Pre-Ganker Window',start:7,  end:9,  status:'good'},
-      {label:'Full Danger Zone', start:9,  end:21, status:'avoid'},
-      {label:'Late Night Safe',  start:21, end:24, status:'best'},
+    1: [ // Mon
+      {label:'Dawn Sweep',   start:0,  end:4,  status:'best'},
+      {label:'Morning Raid', start:4,  end:7,  status:'good'},
+      {label:'Prime Danger', start:9,  end:17, status:'avoid'},
+      {label:'Late Night',   start:21, end:24, status:'best'},
     ],
-    get windows(){ return (typeof globalDay!=='undefined'&&globalDay==='weekend')?this.windowsWeekend:this.windowsWeekday; },
-    rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
-    rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
+    2: [ // Tue — same as Mon
+      {label:'Dawn Sweep',   start:0,  end:4,  status:'best'},
+      {label:'Morning Raid', start:4,  end:7,  status:'good'},
+      {label:'Prime Danger', start:9,  end:17, status:'avoid'},
+      {label:'Late Night',   start:21, end:24, status:'best'},
+    ],
+    3: [ // Wed
+      {label:'Dawn Sweep',   start:0,  end:4,  status:'best'},
+      {label:'Morning Raid', start:4,  end:7,  status:'good'},
+      {label:'Prime Danger', start:9,  end:17, status:'avoid'},
+      {label:'Late Night',   start:21, end:24, status:'best'},
+    ],
+    4: [ // Thu
+      {label:'Dawn Sweep',   start:0,  end:4,  status:'best'},
+      {label:'Morning Raid', start:4,  end:7,  status:'good'},
+      {label:'Prime Danger', start:9,  end:18, status:'avoid'},
+      {label:'Late Night',   start:21, end:24, status:'best'},
+    ],
+    5: [ // Fri — gamers stay late, danger extends
+      {label:'Dawn Sweep',        start:0,  end:4,  status:'best'},
+      {label:'Morning Raid',      start:4,  end:7,  status:'good'},
+      {label:'Full Danger Zone',  start:8,  end:22, status:'avoid'},
+      {label:'Late Night Safe',   start:22, end:24, status:'best'},
+    ],
+    6: [ // Sat
+      {label:'Dead Hour Clear',   start:0,  end:5,  status:'best'},
+      {label:'Early Morning',     start:5,  end:7,  status:'good'},
+      {label:'Pre-Ganker',        start:7,  end:9,  status:'good'},
+      {label:'Full Danger Zone',  start:9,  end:21, status:'avoid'},
+      {label:'Late Night Safe',   start:21, end:24, status:'best'},
+    ],
   },
-  {
-    icon:'⚔️', title:'Medium Camp Clearing', prefer:'Best During High Population',
-    rzImpact:'Needs some traffic for loot economy but not so dense you get zerged. Medium RZ = sweet spot. On weekends, prime window starts UTC 09 (earlier than weekdays). Avoid solo 12–15 on weekends — danger tier.',
-    ctaNote:'CTA pulls zergs to BZ — medium camps in RZ get quieter. Weekends have extra CTA at UTC 17–18, giving you a bonus farm window in the evening.',
-    windowsWeekday:[
-      {label:'Prime Rush',    start:9,  end:13, status:'best'},
-      {label:'Midday Grind',  start:13, end:17, status:'best'},
-      {label:'Evening Wind',  start:17, end:19, status:'good'},
-      {label:'Low Turnout',   start:21, end:8,  status:'avoid'},
-    ],
-    windowsWeekend:[
+  medCamp: {
+    0: [
       {label:'Early Prime',   start:8,  end:12, status:'best'},
       {label:'Midday Rush',   start:12, end:15, status:'best'},
       {label:'Eve Bonus',     start:17, end:20, status:'best'},
       {label:'Danger Hours',  start:12, end:15, status:'avoid'},
       {label:'Low Turnout',   start:21, end:7,  status:'avoid'},
     ],
-    get windows(){ return (typeof globalDay!=='undefined'&&globalDay==='weekend')?this.windowsWeekend:this.windowsWeekday; },
-    rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
-    rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
-  },
-  {
-    icon:'🛡️', title:'Safe Transport', prefer:'Best During Low Population',
-    rzImpact:'RZ density = direct gank risk on roads. Very Low/Low = cross freely. High/Danger = expect ambushes. Weekends are especially dangerous UTC 07–22 — gankers are active 2 hours earlier than weekdays.',
-    ctaNote:'CTA is the safest transport window — gankers occupied in BZ. Weekends have more frequent CTA windows (UTC 09–10, 12–13, 17–18) — time crossings with CTA starts for best safety.',
-    windowsWeekday:[
-      {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
-      {label:'Early Morning',  start:1,  end:5,  status:'best'},
-      {label:'Pre-Gank Calm',  start:5,  end:8,  status:'good'},
-      {label:'Gank Zone',      start:11, end:17, status:'avoid'},
+    1: [
+      {label:'Prime Rush',   start:9,  end:13, status:'best'},
+      {label:'Midday Grind', start:13, end:17, status:'best'},
+      {label:'Evening Wind', start:17, end:19, status:'good'},
+      {label:'Low Turnout',  start:21, end:8,  status:'avoid'},
     ],
-    windowsWeekend:[
+    2: [
+      {label:'Prime Rush',   start:9,  end:13, status:'best'},
+      {label:'Midday Grind', start:13, end:17, status:'best'},
+      {label:'Evening Wind', start:17, end:19, status:'good'},
+      {label:'Low Turnout',  start:21, end:8,  status:'avoid'},
+    ],
+    3: [
+      {label:'Prime Rush',   start:9,  end:13, status:'best'},
+      {label:'Midday Grind', start:13, end:17, status:'best'},
+      {label:'Evening Wind', start:17, end:19, status:'good'},
+      {label:'Low Turnout',  start:21, end:8,  status:'avoid'},
+    ],
+    4: [
+      {label:'Prime Rush',   start:9,  end:13, status:'best'},
+      {label:'Midday Grind', start:13, end:17, status:'best'},
+      {label:'Evening Rush', start:17, end:20, status:'good'},
+      {label:'Low Turnout',  start:21, end:8,  status:'avoid'},
+    ],
+    5: [
+      {label:'Prime Rush',       start:8,  end:13, status:'best'},
+      {label:'Midday Grind',     start:13, end:17, status:'best'},
+      {label:'Fri Night Rush',   start:17, end:22, status:'best'},
+      {label:'Dead Hours',       start:22, end:7,  status:'avoid'},
+    ],
+    6: [
+      {label:'Early Prime',   start:8,  end:12, status:'best'},
+      {label:'Midday Rush',   start:12, end:15, status:'best'},
+      {label:'Eve Bonus',     start:17, end:20, status:'best'},
+      {label:'Low Turnout',   start:21, end:7,  status:'avoid'},
+    ],
+  },
+  transport: {
+    0: [
       {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
       {label:'Night Clear',    start:1,  end:5,  status:'best'},
       {label:'Tight Window',   start:5,  end:7,  status:'good'},
       {label:'Full Danger',    start:7,  end:21, status:'avoid'},
     ],
-    get windows(){ return (typeof globalDay!=='undefined'&&globalDay==='weekend')?this.windowsWeekend:this.windowsWeekday; },
-    rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
-    rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
+    1: [
+      {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
+      {label:'Early Morning',  start:1,  end:5,  status:'best'},
+      {label:'Pre-Gank Calm',  start:5,  end:8,  status:'good'},
+      {label:'Gank Zone',      start:11, end:17, status:'avoid'},
+    ],
+    2: [
+      {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
+      {label:'Early Morning',  start:1,  end:5,  status:'best'},
+      {label:'Pre-Gank Calm',  start:5,  end:8,  status:'good'},
+      {label:'Gank Zone',      start:11, end:17, status:'avoid'},
+    ],
+    3: [
+      {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
+      {label:'Early Morning',  start:1,  end:5,  status:'best'},
+      {label:'Pre-Gank Calm',  start:5,  end:8,  status:'good'},
+      {label:'Gank Zone',      start:11, end:17, status:'avoid'},
+    ],
+    4: [
+      {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
+      {label:'Early Morning',  start:1,  end:5,  status:'best'},
+      {label:'Pre-Gank Calm',  start:5,  end:8,  status:'good'},
+      {label:'Gank Zone',      start:10, end:18, status:'avoid'},
+    ],
+    5: [
+      {label:'Dead Hour Run',  start:22, end:2,  status:'best'},
+      {label:'Early Morning',  start:2,  end:5,  status:'best'},
+      {label:'Narrow Window',  start:5,  end:7,  status:'good'},
+      {label:'Full Danger',    start:7,  end:22, status:'avoid'},
+    ],
+    6: [
+      {label:'Dead Hour Run',  start:21, end:1,  status:'best'},
+      {label:'Night Clear',    start:1,  end:5,  status:'best'},
+      {label:'Tight Window',   start:5,  end:7,  status:'good'},
+      {label:'Full Danger',    start:7,  end:21, status:'avoid'},
+    ],
   },
-  {
-    icon:'🗡️', title:'Ganking Sellers', prefer:'Best During High Traffic',
-    rzImpact:'You WANT high RZ density — more targets moving through roads. Danger hours = peak victims. Weekends have more targets earlier (UTC 07+) and more CTA traffic crossing chokepoints.',
-    ctaNote:'During CTA, target BZ chokepoints — players racing to join their guild are distracted and loaded. Weekend CTAs at UTC 09–10 and 17–18 create extra ambush opportunities.',
-    windowsWeekday:[
+  ganking: {
+    0: [
+      {label:'Early Hunt',    start:7,  end:9,  status:'best'},
+      {label:'Peak Traffic',  start:9,  end:15, status:'best'},
+      {label:'Eve CTA Rush',  start:17, end:19, status:'best'},
+      {label:'Mid-Prime',     start:15, end:17, status:'good'},
+      {label:'Dead Roads',    start:21, end:6,  status:'avoid'},
+    ],
+    1: [
       {label:'Pre-Prime Hunt',  start:7,  end:11, status:'best'},
       {label:'Seller Rush',     start:11, end:15, status:'best'},
       {label:'Evening Hunt',    start:16, end:18, status:'good'},
       {label:'Dead Roads',      start:21, end:6,  status:'avoid'},
     ],
-    windowsWeekend:[
-      {label:'Early Hunt',      start:7,  end:9,  status:'best'},
-      {label:'Peak Traffic',    start:9,  end:15, status:'best'},
-      {label:'Eve CTA Rush',    start:17, end:19, status:'best'},
-      {label:'Mid-Prime',       start:15, end:17, status:'good'},
+    2: [
+      {label:'Pre-Prime Hunt',  start:7,  end:11, status:'best'},
+      {label:'Seller Rush',     start:11, end:15, status:'best'},
+      {label:'Evening Hunt',    start:16, end:18, status:'good'},
       {label:'Dead Roads',      start:21, end:6,  status:'avoid'},
     ],
-    get windows(){ return (typeof globalDay!=='undefined'&&globalDay==='weekend')?this.windowsWeekend:this.windowsWeekday; },
+    3: [
+      {label:'Pre-Prime Hunt',  start:7,  end:11, status:'best'},
+      {label:'Seller Rush',     start:11, end:15, status:'best'},
+      {label:'Evening Hunt',    start:16, end:18, status:'good'},
+      {label:'Dead Roads',      start:21, end:6,  status:'avoid'},
+    ],
+    4: [
+      {label:'Pre-Prime Hunt',  start:7,  end:11, status:'best'},
+      {label:'Seller Rush',     start:11, end:15, status:'best'},
+      {label:'Evening Rush',    start:16, end:19, status:'good'},
+      {label:'Dead Roads',      start:21, end:6,  status:'avoid'},
+    ],
+    5: [
+      {label:'Pre-Prime Hunt',  start:7,  end:11, status:'best'},
+      {label:'Seller Rush',     start:11, end:16, status:'best'},
+      {label:'Fri Night Rush',  start:17, end:22, status:'best'},
+      {label:'Dead Roads',      start:22, end:6,  status:'avoid'},
+    ],
+    6: [
+      {label:'Early Hunt',    start:7,  end:9,  status:'best'},
+      {label:'Peak Traffic',  start:9,  end:15, status:'best'},
+      {label:'Eve CTA Rush',  start:17, end:19, status:'best'},
+      {label:'Mid-Prime',     start:15, end:17, status:'good'},
+      {label:'Dead Roads',    start:21, end:6,  status:'avoid'},
+    ],
+  },
+  blackMarket: {
+    0: [
+      {label:'Pre-Ganker Wave — List Early',start:6,  end:8,  status:'best'},
+      {label:'Roads Cut Off — Demand Peaks',start:8,  end:11, status:'best'},
+      {label:'Pre-Evening PvE Wave',        start:15, end:17, status:'best'},
+      {label:'Early Morning Prep',          start:5,  end:6,  status:'good'},
+      {label:'Mid-Morning — Roads Still Hot',start:11, end:13, status:'avoid'},
+      {label:'Late Night — Dead Market',    start:21, end:5,  status:'avoid'},
+    ],
+    1: [
+      {label:'Pre-PvE Ramp — List Now',    start:8,  end:10, status:'best'},
+      {label:'Pre-Evening PvE Listing',     start:16, end:18, status:'best'},
+      {label:'Early Prep Window',           start:7,  end:8,  status:'good'},
+      {label:'Post-Morning PvE Lull',       start:13, end:15, status:'good'},
+      {label:'Roads Hot — Skip Listing',    start:10, end:12, status:'avoid'},
+      {label:'Dead Hours — No Demand',      start:20, end:7,  status:'avoid'},
+    ],
+    2: [
+      {label:'Pre-PvE Ramp — List Now',    start:8,  end:10, status:'best'},
+      {label:'Pre-Evening PvE Listing',     start:16, end:18, status:'best'},
+      {label:'Early Prep Window',           start:7,  end:8,  status:'good'},
+      {label:'Post-Morning PvE Lull',       start:13, end:15, status:'good'},
+      {label:'Roads Hot — Skip Listing',    start:10, end:12, status:'avoid'},
+      {label:'Dead Hours — No Demand',      start:20, end:7,  status:'avoid'},
+    ],
+    3: [
+      {label:'Pre-PvE Ramp — List Now',    start:8,  end:10, status:'best'},
+      {label:'Pre-Evening PvE Listing',     start:16, end:18, status:'best'},
+      {label:'Early Prep Window',           start:7,  end:8,  status:'good'},
+      {label:'Post-Morning PvE Lull',       start:13, end:15, status:'good'},
+      {label:'Roads Hot — Skip Listing',    start:10, end:12, status:'avoid'},
+      {label:'Dead Hours — No Demand',      start:20, end:7,  status:'avoid'},
+    ],
+    4: [
+      {label:'Pre-PvE Ramp — List Now',    start:8,  end:10, status:'best'},
+      {label:'Pre-Evening PvE Listing',     start:16, end:18, status:'best'},
+      {label:'Early Prep Window',           start:7,  end:8,  status:'good'},
+      {label:'Post-Morning PvE Lull',       start:13, end:15, status:'good'},
+      {label:'Roads Hot — Skip Listing',    start:10, end:12, status:'avoid'},
+      {label:'Dead Hours — No Demand',      start:20, end:7,  status:'avoid'},
+    ],
+    5: [
+      {label:'Pre-Fri Rush — List Early',  start:6,  end:8,  status:'best'},
+      {label:'Roads Cut Off — Demand Peaks',start:8, end:12,  status:'best'},
+      {label:'Pre-Night Wave',              start:15, end:17, status:'best'},
+      {label:'Early Morning Prep',          start:5,  end:6,  status:'good'},
+      {label:'Mid-Morning — Roads Still Hot',start:12, end:14,status:'avoid'},
+      {label:'Late Night — Dead Market',    start:23, end:5,  status:'avoid'},
+    ],
+    6: [
+      {label:'Pre-Ganker Wave — List Early',start:6,  end:8,  status:'best'},
+      {label:'Roads Cut Off — Demand Peaks',start:8,  end:11, status:'best'},
+      {label:'Pre-Evening PvE Wave',        start:15, end:17, status:'best'},
+      {label:'Early Morning Prep',          start:5,  end:6,  status:'good'},
+      {label:'Mid-Morning — Roads Still Hot',start:11, end:13, status:'avoid'},
+      {label:'Late Night — Dead Market',    start:21, end:5,  status:'avoid'},
+    ],
+  },
+};
+
+const activities = [
+  {
+    key:'smallCamp',
+    icon:'🏕️', title:'Small Camp Clearing', prefer:'Best During Low Population',
+    rzImpact:'Lower RZ density = fewer interrupters while you clear. Very Low/Low = ideal. Danger = very risky solo. Weekends & Fridays: gankers online from UTC 07 — avoid solo 09–22.',
+    ctaNote:'During CTA windows players pull into black zones — redzones drain temporarily. Weekends have multiple CTA windows (UTC 09–10, 12–13, 17–18) — bonus solo windows mid-day.',
     rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
     rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
   },
   {
+    key:'medCamp',
+    icon:'⚔️', title:'Medium Camp Clearing', prefer:'Best During High Population',
+    rzImpact:'Needs some traffic for loot economy but not so dense you get zerged. Medium RZ = sweet spot. On weekends, prime window starts UTC 09 (earlier than weekdays). Avoid solo 12–15 on weekends — danger tier.',
+    ctaNote:'CTA pulls zergs to BZ — medium camps in RZ get quieter. Weekends have extra CTA at UTC 17–18, giving you a bonus farm window in the evening.',
+    rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
+    rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
+  },
+  {
+    key:'transport',
+    icon:'🛡️', title:'Safe Transport', prefer:'Best During Low Population',
+    rzImpact:'RZ density = direct gank risk on roads. Very Low/Low = cross freely. High/Danger = expect ambushes. Fri night, Sat & Sun are especially dangerous UTC 07–22 — gankers active earlier.',
+    ctaNote:'CTA is the safest transport window — gankers occupied in BZ. Weekends have more frequent CTA windows — time crossings with CTA starts for best safety.',
+    rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
+    rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
+  },
+  {
+    key:'ganking',
+    icon:'🗡️', title:'Ganking Sellers', prefer:'Best During High Traffic',
+    rzImpact:'You WANT high RZ density — more targets moving through roads. Danger hours = peak victims. Fri night & weekends have more targets earlier (UTC 07+) and more CTA traffic crossing chokepoints.',
+    ctaNote:'During CTA, target BZ chokepoints — players racing to join their guild are distracted and loaded. Fri night adds a bonus hunt window extending to UTC 22.',
+    rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
+    rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
+  },
+  {
+    key:'blackMarket',
     icon:'📦', title:'Black Market Listing', prefer:'List Before PvE Peaks · Before Roads Go Hot',
     isBM: true,
-    rzImpact:'Black Market demand is driven by two forces: <b>PvE players grouping up</b> (consuming gear) and <b>red zone gankers blocking transport roads</b> (preventing Low sellers from restocking BM). When these two overlap, prices spike fast — but only if your sell order is already placed. List BEFORE roads go hot, not after. High/Danger RZ = haulers stop moving = your listed item gets bought out. Weekdays: gankers ramp up UTC 09 — list by UTC 08. Weekends: gankers online from UTC 07 — you must be listed by UTC 06–07 or you miss the first wave. Note: weekend demand stays elevated longer due to extended PvE player activity.',
-    ctaNote:'The real restock driver is PvE activity (dungeon groups, corrupted runs, etc.) combined with road gankers cutting off Low tier sellers. Focus on listing during PvE ramp windows, not around CTA timers.',
-    windowsWeekday:[
-      {label:'Pre-PvE Ramp — List Now',         start:8,  end:10, status:'best'},
-      {label:'Pre-Evening PvE Listing',          start:16, end:18, status:'best'},
-      {label:'Early Prep Window',                start:7,  end:8,  status:'good'},
-      {label:'Post-Morning PvE Lull',            start:13, end:15, status:'good'},
-      {label:'Roads Hot — Skip Listing',         start:10, end:12, status:'avoid'},
-      {label:'Dead Hours — No Demand',           start:20, end:7,  status:'avoid'},
-    ],
-    windowsWeekend:[
-      {label:'Pre-Ganker Wave — List Early',     start:6,  end:8,  status:'best'},
-      {label:'Roads Cut Off — Demand Peaks',     start:8,  end:11, status:'best'},
-      {label:'Pre-Evening PvE Wave',             start:15, end:17, status:'best'},
-      {label:'Early Morning Prep',               start:5,  end:6,  status:'good'},
-      {label:'Mid-Morning — Roads Still Hot',    start:11, end:13, status:'avoid'},
-      {label:'Late Night — Dead Market',         start:21, end:5,  status:'avoid'},
-    ],
-    // Keep a combined windows array for the "now" panel and active window detection — use weekday as base
-    get windows(){ return (typeof globalDay !== 'undefined' && globalDay === 'weekend') ? this.windowsWeekend : this.windowsWeekday; },
+    rzImpact:'Black Market demand is driven by PvE players grouping up (consuming gear) and red zone gankers blocking transport roads. List BEFORE roads go hot. Fri night & weekends: list by UTC 06–07 or you miss the first wave.',
+    ctaNote:'The real restock driver is PvE activity combined with road gankers cutting off Low tier sellers. Focus on listing during PvE ramp windows, not around CTA timers.',
     rzWeekday:['empty','empty','empty','low','low','low','medium','medium','high','high','high','cta','cta','danger','danger','high','medium','medium','cta','cta','high','medium','low','empty'],
     rzWeekend:['empty','empty','empty','empty','low','low','medium','high','high','cta','cta','danger','cta','cta','danger','danger','high','cta','cta','danger','high','high','medium','low'],
   },
 ];
 
+// Helper: get windows for an activity on a given UTC day index (0=Sun)
+function getWindowsForDay(act, dayIdx){
+  const map = ACT_WINDOWS_BY_DAY[act.key];
+  return map ? (map[dayIdx] || map[1]) : [];
+}
+
 /* ══════════════════════════════════════
    STATE
 ══════════════════════════════════════ */
-let globalDay = 'weekday';   // can be freely toggled
-let rzDay     = 'weekday';   // can be freely toggled
-let globalDayManual = false; // true = user manually chose
-let rzDayManual     = false;
 let currentHour = 0;
+let currentUTCDay = 0; // 0=Sun … 6=Sat (live)
+
+// Selected day for each heatmap (defaults to today)
+let popSelectedDay   = new Date().getUTCDay();
+let rzSelectedDay    = new Date().getUTCDay();
+let popDayManual     = false;
+let rzDayManual      = false;
+
+// Activity day state per activity (key → dayIdx)
+const actDayState = new Map();
+let activeActivityIdx = 0;
+const ctaOpenKeys = new Set(); // persist CTA popover open state across re-renders
+
 let localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-let selectedTz = null; // null = use real localTz; set to a zone tz string when user picks one
-let selectedConvTz = null; // currently selected in custom dropdown
-let tzPanelVisible = false;
+let selectedTz = null;
 let detectedCountry = '';
 
-// Detect country via timezone→country mapping
+const DAY_NAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAY_CLASSES = ['tag-sun','tag-mon','tag-tue','tag-wed','tag-thu','tag-fri','tag-sat'];
+const DAY_FULL    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+/* ── Theme ── */
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').textContent  = isDark ? '☀️' : '🌙';
+  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
+}
+
 (function detectCountry(){
-  const tzCountryMap = {
+  const map = {
     'Asia/Manila':'🇵🇭','Asia/Jakarta':'🇮🇩','Asia/Makassar':'🇮🇩','Asia/Jayapura':'🇮🇩',
     'Asia/Bangkok':'🇹🇭','Asia/Ho_Chi_Minh':'🇻🇳','Asia/Saigon':'🇻🇳',
     'Asia/Kuala_Lumpur':'🇲🇾','Asia/Singapore':'🇸🇬',
@@ -499,101 +1573,72 @@ let detectedCountry = '';
     'America/New_York':'🇺🇸','America/Chicago':'🇺🇸','America/Los_Angeles':'🇺🇸',
     'Asia/Dubai':'🇦🇪',
   };
-  detectedCountry = tzCountryMap[localTz] || '';
-  const flagEl = document.getElementById('localCountryFlag');
-  if(flagEl && detectedCountry) flagEl.textContent = detectedCountry;
+  detectedCountry = map[localTz] || '';
+  const el = document.getElementById('localCountryFlag');
+  if(el && detectedCountry) el.textContent = detectedCountry;
 })();
 
-/* ══════════════════════════════════════
-   HELPERS
-══════════════════════════════════════ */
+/* ── Helpers ── */
 function pad(v){ return String(v).padStart(2,'0'); }
-function isWeekend(d){ const day=d.getUTCDay(); return day===0||day===6; }
 function inWindow(h,s,e){ if(s===e)return false; if(e<=s)return h>=s||h<e; return h>=s&&h<e; }
 function getActStatus(h,wins){ for(const w of wins)if(inWindow(h,w.start,w.end))return w.status; return 'neutral'; }
 function fmtRange(s,e){ return `${pad(s%24)}:00 – ${pad(e%24)}:00 UTC`; }
 function badgeClass(s){ return s==='best'?'badge-best':s==='good'?'badge-good':s==='avoid'?'badge-avoid':'badge-neutral'; }
-
-// Returns the timezone currently used for "your local" display
 function activeTz(){ return selectedTz || localTz; }
+function isCurrentDay(dayIdx){ return dayIdx === currentUTCDay; }
 
-/* ══════════════════════════════════════
-   TZ SELECTION — click a clock box to use it as local
-══════════════════════════════════════ */
-function selectTz(zone){
-  if(zone.tz === localTz){ resetSelectedTz(); return; }
-  selectedTz = zone.tz;
-  const banner = document.getElementById('selectedTzBanner');
-  document.getElementById('selectedTzText').textContent =
-    `Viewing as: ${zone.flag} ${zone.abbr} · ${zone.countries.split('·')[0].trim()} (${zone.offset})`;
-  banner.style.display = 'flex';
-  // Update local time header labels
-  const flagEl = document.getElementById('localCountryFlag');
-  if(flagEl) flagEl.textContent = zone.flag;
-  renderClocks(new Date());
-  renderActivities();
-}
-
-function resetSelectedTz(){
-  selectedTz = null;
-  document.getElementById('selectedTzBanner').style.display = 'none';
-  // Restore real detected country flag
-  const flagEl = document.getElementById('localCountryFlag');
-  if(flagEl) flagEl.textContent = detectedCountry || '';
-  renderClocks(new Date());
-  renderActivities();
-}
-
-function formatTime(date,tz,showSec=true,ampm=false){
+function formatTime(date, tz, showSec=true, ampm=false){
   if(ampm){
     const opts={hour:'numeric',minute:'2-digit',hour12:true,timeZone:tz};
     if(showSec) opts.second='2-digit';
     return new Intl.DateTimeFormat('en-US',opts).format(date);
   }
-  const opts = {hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz};
+  const opts={hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz};
   if(showSec) opts.second='2-digit';
   return new Intl.DateTimeFormat('en-GB',opts).format(date);
 }
 
 function getLocalUTCOffset(tz){
   try{
-    const now = new Date();
-    const utcMs = now.getTime();
-    const tzDate = new Date(now.toLocaleString('en-US',{timeZone:tz}));
-    const utcDate = new Date(now.toLocaleString('en-US',{timeZone:'UTC'}));
-    const diff = (tzDate-utcDate)/60000;
-    const sign = diff>=0?'+':'-';
-    const abs = Math.abs(diff);
+    const now=new Date();
+    const tzDate=new Date(now.toLocaleString('en-US',{timeZone:tz}));
+    const utcDate=new Date(now.toLocaleString('en-US',{timeZone:'UTC'}));
+    const diff=(tzDate-utcDate)/60000;
+    const sign=diff>=0?'+':'-';
+    const abs=Math.abs(diff);
     return `UTC${sign}${pad(Math.floor(abs/60))}:${pad(abs%60)}`;
   }catch(e){ return ''; }
 }
 
-/* ══════════════════════════════════════
-   TZ PANEL TOGGLE
-══════════════════════════════════════ */
-function toggleTzPanel(){
-  tzPanelVisible = !tzPanelVisible;
-  const panel = document.getElementById('tzGroups');
-  const btn = document.getElementById('tzToggleBtn');
-  const icon = document.getElementById('tzToggleIcon');
-  panel.style.display = tzPanelVisible ? 'flex' : 'none';
-  panel.style.flexDirection = 'column';
-  panel.style.gap = '10px';
-  icon.textContent = tzPanelVisible ? '▲' : '▼';
-  btn.querySelector('span:last-child') || btn;
-  btn.childNodes[btn.childNodes.length-1].textContent = tzPanelVisible ? ' Hide Asia Time Zones' : ' Show Asia Time Zones';
+/* ── TZ Selection ── */
+function selectTz(zone){
+  if(zone.tz===localTz){ resetSelectedTz(); return; }
+  selectedTz = zone.tz;
+  const banner = document.getElementById('selectedTzBanner');
+  document.getElementById('selectedTzText').textContent =
+    `Viewing as: ${zone.flag} ${zone.abbr} · ${zone.countries.split('·')[0].trim()} (${zone.offset})`;
+  banner.style.display = 'flex';
+  const flagEl = document.getElementById('localCountryFlag');
+  if(flagEl) flagEl.textContent = zone.flag;
+  renderClocks(new Date());
+  renderActivities();
 }
-
-/* ══════════════════════════════════════
-   HOUR BLOCK TOOLTIP
-══════════════════════════════════════ */
+function resetSelectedTz(){
+  selectedTz = null;
+  document.getElementById('selectedTzBanner').style.display = 'none';
+  const flagEl = document.getElementById('localCountryFlag');
+  if(flagEl) flagEl.textContent = detectedCountry || '';
+  renderClocks(new Date());
+  renderActivities();
+}
+/* ── Tooltip ── */
 let tooltipEl = null;
 let tooltipPinned = false;
 
 function showHourTooltip(e, utcHour){
   if(!tooltipEl){
     tooltipEl = document.createElement('div');
-    tooltipEl.className='hour-block-tooltip';
+    tooltipEl.className = 'hour-block-tooltip';
     document.body.appendChild(tooltipEl);
   }
   const now = new Date();
@@ -606,368 +1651,429 @@ function showHourTooltip(e, utcHour){
     <div class="tt-utc">UTC ${String(utcHour).padStart(2,'0')}:00</div>
     <div class="tt-local">${localFlag} ${localAmPm}</div>
     <div class="tt-tz">${localAbbr} · your local time</div>`;
-  tooltipEl.style.display='block';
+  tooltipEl.style.display = 'block';
   tooltipPinned = true;
   positionTooltip(e);
 }
 function positionTooltip(e){
   if(!tooltipEl) return;
-  const x = e.clientX, y = e.clientY;
-  const tw = tooltipEl.offsetWidth || 170;
-  const th = tooltipEl.offsetHeight || 70;
-  const left = Math.min(x+14, window.innerWidth-tw-10);
-  const top = y-th-10 < 0 ? y+14 : y-th-10;
-  tooltipEl.style.left=left+'px';
-  tooltipEl.style.top=top+'px';
+  const tw = tooltipEl.offsetWidth || 155;
+  const th = tooltipEl.offsetHeight || 65;
+  const left = Math.min(e.clientX+14, window.innerWidth-tw-10);
+  const top  = e.clientY-th-10 < 0 ? e.clientY+14 : e.clientY-th-10;
+  tooltipEl.style.left = left+'px';
+  tooltipEl.style.top  = top+'px';
 }
 function hideHourTooltip(){
-  if(tooltipEl){ tooltipEl.style.display='none'; }
+  if(tooltipEl) tooltipEl.style.display='none';
   tooltipPinned = false;
 }
+document.addEventListener('click', e=>{
+  if(tooltipPinned && !e.target.classList.contains('hour-block')) hideHourTooltip();
+  // Close CTA popovers on outside click
+  if(!e.target.closest('.cta-info-row')){
+    ctaOpenKeys.clear();
+    document.querySelectorAll('.cta-tooltip-popover.is-open').forEach(el=>el.classList.remove('is-open'));
+  }
+});
 
-
+/* ── Hour block builder ── */
 const AXIS_HTML='<span>00</span><span>03</span><span>06</span><span>09</span><span>12</span><span>15</span><span>18</span><span>21</span><span>24</span>';
 
-function makeBlock(val,h,nowH,type){
-  const b=document.createElement('div');
-  b.className='hour-block';
-  if(type==='pop') b.classList.add('pop-'+val);
+function makeBlock(val, h, nowH, type){
+  const b = document.createElement('div');
+  b.className = 'hour-block';
+  if(type==='pop')      b.classList.add('pop-'+val);
   else if(type==='rz'){ b.classList.add('rz-'+val); if(val==='cta') b.classList.add('cta-marker'); }
-  else b.classList.add('hb-'+val);
-  // nowH === -1 means "don't show NOW on this track"
+  else                  b.classList.add('hb-'+val);
   if(nowH >= 0 && h===nowH) b.classList.add('is-now');
-  b.innerHTML=`<span class="pip">NOW</span>${pad(h)}`;
+  b.innerHTML = `<span class="pip">NOW</span>${pad(h)}`;
   b.addEventListener('click', e=>{ e.stopPropagation(); showHourTooltip(e,h); });
   return b;
 }
 
 function buildTrackInto(id, values, nowH, type){
-  const c=document.getElementById(id); if(!c)return;
-  c.innerHTML='';
-  values.forEach((v,h)=>c.appendChild(makeBlock(v,h,nowH,type)));
+  const c = document.getElementById(id); if(!c) return;
+  c.innerHTML = '';
+  values.forEach((v,h) => c.appendChild(makeBlock(v,h,nowH,type)));
 }
-
 function buildTrackEl(values, nowH, type){
-  const t=document.createElement('div'); t.className='hour-track';
-  values.forEach((v,h)=>t.appendChild(makeBlock(v,h,nowH,type)));
+  const t = document.createElement('div'); t.className = 'hour-track';
+  values.forEach((v,h) => t.appendChild(makeBlock(v,h,nowH,type)));
   return t;
 }
-
-function axisEl(){ const d=document.createElement('div'); d.className='track-axis'; d.innerHTML=AXIS_HTML; return d; }
+function axisEl(){
+  const d = document.createElement('div'); d.className = 'track-axis'; d.innerHTML = AXIS_HTML; return d;
+}
 
 /* ══════════════════════════════════════
-   GROUPED TIMEZONE CLOCK PANEL
+   DAY PICKER (7-day) builder
 ══════════════════════════════════════ */
+function buildDayPicker(containerId, getSelected, onSelect){
+  const wrap = document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.innerHTML = '';
+
+  const picker = document.createElement('div');
+  picker.className = 'day-picker';
+
+  for(let i=0;i<7;i++){
+    const btn = document.createElement('button');
+    btn.textContent = DAY_NAMES[i];
+    if(i === currentUTCDay) btn.classList.add('is-today');
+    if(i === getSelected()) btn.classList.add('active');
+    btn.addEventListener('click', ()=>{
+      onSelect(i);
+      // Refresh picker highlights
+      picker.querySelectorAll('button').forEach((b,idx)=>{
+        b.classList.toggle('active', idx === getSelected());
+      });
+    });
+    picker.appendChild(btn);
+  }
+  wrap.appendChild(picker);
+}
+
+/* ── Render Population ── */
+function renderGlobalPop(){
+  const nowH = isCurrentDay(popSelectedDay) ? currentHour : -1;
+  buildTrackInto('globalPopBar', POP_BY_DAY[popSelectedDay] || POP_BY_DAY[1], nowH, 'pop');
+}
+function renderRzGlobal(){
+  const nowH = isCurrentDay(rzSelectedDay) ? currentHour : -1;
+  buildTrackInto('rzGlobalBar', RZ_BY_DAY[rzSelectedDay] || RZ_BY_DAY[1], nowH, 'rz');
+}
+
+function refreshPopPicker(){
+  buildDayPicker('popDayPickerWrap', ()=>popSelectedDay, (d)=>{
+    popSelectedDay = d; popDayManual = true; renderGlobalPop();
+  });
+}
+function refreshRzPicker(){
+  buildDayPicker('rzDayPickerWrap', ()=>rzSelectedDay, (d)=>{
+    rzSelectedDay = d; rzDayManual = true; renderRzGlobal();
+  });
+}
+
+/* ── TZ Groups panel ── */
 function renderTzGroups(now){
   const container = document.getElementById('tzGroups');
-  container.innerHTML='';
+  if(!container) return;
+  container.innerHTML = '';
+  const tz = activeTz();
 
-  // Only show Asia + Australia groups in the clock panel
-  const showGroups = ['Southeast Asia — UTC+7','Southeast Asia — UTC+8','East Asia — UTC+9','Australia — UTC+8 to +11'];
+  // Single flat row — all Asia & Australia zones, no grouping headers
+  const row = document.createElement('div');
+  row.className = 'tz-group-row';
 
-  showGroups.forEach(gName=>{
-    const grp = TZ_GROUPS.find(g=>g.group===gName);
-    if(!grp) return;
-
-    const groupEl = document.createElement('div');
-    groupEl.className='tz-group';
-
-    const labelEl = document.createElement('div');
-    labelEl.className='tz-group-label';
-    labelEl.textContent=grp.group;    groupEl.appendChild(labelEl);
-
-    const clocksEl = document.createElement('div');
-    clocksEl.className='tz-group-clocks';
-
-    grp.zones.forEach(z=>{
-      const box = document.createElement('div');
-      box.className='clock-box';
-      if(z.tz===localTz) box.classList.add('is-local');
-      if(selectedTz && z.tz===selectedTz) box.classList.add('is-selected');
-
-      const ampmTime = formatTime(now,z.tz,false,true);
-      box.innerHTML=`
-        <small>${z.flag} ${z.abbr}</small>
-        <div class="tz-countries">${z.countries.split('·')[0].trim()}</div>
-        <strong>${ampmTime}</strong>`;
-
-      // Click to use this timezone as "your local"
-      box.addEventListener('click', ()=> selectTz(z));
-      clocksEl.appendChild(box);
-    });
-
-    groupEl.appendChild(clocksEl);
-    container.appendChild(groupEl);
-  });
-}
-
-// Hide tooltip when clicking outside any hour-block
-document.addEventListener('click',(e)=>{
-  if(tooltipPinned && !e.target.classList.contains('hour-block')){
-    hideHourTooltip();
-  }
-});
-
-/* ══════════════════════════════════════
-   DAY TOGGLE — manual override, no auto-reset
-══════════════════════════════════════ */
-function manualToggleDay(stateKey, day, btn, toggleId){
-  if(stateKey==='globalDay'){ globalDay=day; globalDayManual=true; }
-  else { rzDay=day; rzDayManual=true; }
-
-  document.querySelectorAll(`#${toggleId} button`).forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-
-  if(stateKey==='globalDay') renderGlobalPop();
-  else renderRzGlobal();
-}
-
-/* ══════════════════════════════════════
-   RENDER FUNCTIONS
-══════════════════════════════════════ */
-function renderGlobalPop(){
-  buildTrackInto('globalPopBar', POP[globalDay], currentHour, 'pop');
-}
-
-function renderRzGlobal(){
-  buildTrackInto('rzGlobalBar', RZ[rzDay], currentHour, 'rz');
-}
-
-// Persistent tab state per activity — survives re-renders
-const activityTabState = new Map(); // key = act.title, value = 'weekday'|'weekend'
-
-function renderActivities(){
-  const container=document.getElementById('activitiesGrid');
-  const todayIsWeekend = isWeekend(new Date());
-
-  // ── If cards already exist, just refresh dynamic parts (badge + window highlights) ──
-  if(container.children.length === activities.length){
-    activities.forEach(act=>{
-      const idx = activities.indexOf(act);
-      const card = container.children[idx];
-      // Update LIVE NOW badge
-      const activeWin = act.windows.find(w=>inWindow(currentHour,w.start,w.end));
-      const existingBadge = card.querySelector('.activity-top .live-badge');
-      if(activeWin && !existingBadge){
-        const head = card.querySelector('.activity-head');
-        const b=document.createElement('div');
-        b.className=`live-badge ${badgeClass(activeWin.status)}`;
-        b.textContent=activeWin.status==='avoid'?'NOT IDEAL':activeWin.status==='best'?'BEST':activeWin.status==='good'?'GOOD':'NEUTRAL';
-        head.appendChild(b);
-      } else if(activeWin && existingBadge){
-        existingBadge.className=`live-badge ${badgeClass(activeWin.status)}`;
-        existingBadge.textContent=activeWin.status==='avoid'?'NOT IDEAL':activeWin.status==='best'?'BEST':activeWin.status==='good'?'GOOD':'NEUTRAL';
-      } else if(!activeWin && existingBadge){ existingBadge.remove(); }
-      // Update active window highlight in window list
-      const winEls = card.querySelectorAll('.window');
-      const tabDay = activityTabState.get(act.title) || (todayIsWeekend?'weekend':'weekday');
-      const wins = tabDay==='weekend' ? (act.windowsWeekend||act.windows) : (act.windowsWeekday||act.windows);
-      const activeW = wins.find(w=>inWindow(currentHour,w.start,w.end));
-      winEls.forEach((el,i)=>{ el.classList.toggle('active', wins[i]===activeW); });
-    });
-    return;
-  }
-
-  // ── Full build (first render) ──
-  container.innerHTML='';
-  activities.forEach(act=>{
-    const todayKey = todayIsWeekend ? 'weekend' : 'weekday';
-    // Init tab state to today's day type if not set
-    if(!activityTabState.has(act.title)) activityTabState.set(act.title, todayKey);
-
-    const card=document.createElement('div');
-    card.className='activity-card';
-
-    // ── Header ──
-    const activeWin=act.windows.find(w=>inWindow(currentHour,w.start,w.end));
-    const top=document.createElement('div');
-    top.className='activity-top';
-    top.innerHTML=`<div class="activity-head">
-      <div class="activity-name">
-        <div class="activity-icon">${act.icon}</div>
-        <div><h3>${act.title}</h3><div class="preference">${act.prefer}</div></div>
-      </div>
-      ${activeWin?`<div class="live-badge ${badgeClass(activeWin.status)}">${activeWin.status==='avoid'?'NOT IDEAL':activeWin.status==='best'?'BEST':activeWin.status==='good'?'GOOD':'NEUTRAL'}</div>`:''}
-    </div>`;
-    card.appendChild(top);
-
-    // ── Activity window bars (weekday / weekend) — NOW only on matching day ──
-    const wdNowH = todayIsWeekend ? -1 : currentHour;
-    const weNowH = todayIsWeekend ? currentHour : -1;
-
-    const winWdSec=document.createElement('div'); winWdSec.className='heatmap-section';
-    winWdSec.innerHTML=`<div class="heatmap-label"><span class="tag tag-act">ACTIVITY WINDOWS</span> <span style="color:var(--gold);font-size:9px;letter-spacing:.1em;">🗓 WEEKDAY</span> — Best times for this activity</div>`;
-    const aValsWd=Array.from({length:24},(_,h)=>getActStatus(h,act.windowsWeekday||act.windows));
-    winWdSec.appendChild(buildTrackEl(aValsWd,wdNowH,'activity'));
-    winWdSec.appendChild(axisEl());
-    const aLegWd=document.createElement('div'); aLegWd.className='bar-legend';
-    aLegWd.innerHTML=`<div class="leg-item"><div class="leg-dot" style="background:rgba(45,122,82,.85)"></div>Best</div><div class="leg-item"><div class="leg-dot" style="background:rgba(70,110,180,.7)"></div>Good</div><div class="leg-item"><div class="leg-dot" style="background:rgba(130,40,40,.8)"></div>Not Ideal</div><div class="leg-item"><div class="leg-dot" style="background:rgba(70,90,120,.3)"></div>Neutral</div>`;
-    winWdSec.appendChild(aLegWd);
-    card.appendChild(winWdSec);
-
-    const winWeSec=document.createElement('div'); winWeSec.className='heatmap-section';
-    winWeSec.innerHTML=`<div class="heatmap-label"><span class="tag tag-act">ACTIVITY WINDOWS</span> <span style="color:var(--blue);font-size:9px;letter-spacing:.1em;">📅 WEEKEND</span> — Best times for this activity</div>`;
-    const aValsWe=Array.from({length:24},(_,h)=>getActStatus(h,act.windowsWeekend||act.windows));
-    winWeSec.appendChild(buildTrackEl(aValsWe,weNowH,'activity'));
-    winWeSec.appendChild(axisEl());
-    const aLegWe=document.createElement('div'); aLegWe.className='bar-legend';
-    aLegWe.innerHTML=`<div class="leg-item"><div class="leg-dot" style="background:rgba(45,122,82,.85)"></div>Best</div><div class="leg-item"><div class="leg-dot" style="background:rgba(70,110,180,.7)"></div>Good</div><div class="leg-item"><div class="leg-dot" style="background:rgba(130,40,40,.8)"></div>Not Ideal</div><div class="leg-item"><div class="leg-dot" style="background:rgba(70,90,120,.3)"></div>Neutral</div>`;
-    winWeSec.appendChild(aLegWe);
-    card.appendChild(winWeSec);
-
-    // ── Redzone bars — NOW only on matching day ──
-    const rwSec=document.createElement('div'); rwSec.className='heatmap-section';
-    rwSec.innerHTML=`<div class="heatmap-label"><span class="tag tag-rz">REDZONE</span> Weekday roaming density — <span style="color:#d8a0f8">⚔ = CTA active</span></div>`;
-    rwSec.appendChild(buildTrackEl(act.rzWeekday,wdNowH,'rz'));
-    rwSec.appendChild(axisEl());
-    card.appendChild(rwSec);
-
-    const reSec=document.createElement('div'); reSec.className='heatmap-section';
-    reSec.innerHTML=`<div class="heatmap-label"><span class="tag tag-rz">REDZONE</span> Weekend roaming density — <span style="color:#d8a0f8">⚔ = CTA active</span></div>`;
-    reSec.appendChild(buildTrackEl(act.rzWeekend,weNowH,'rz'));
-    reSec.appendChild(axisEl());
-    const rzLeg=document.createElement('div'); rzLeg.className='bar-legend';
-    rzLeg.innerHTML=`<div class="leg-item"><div class="leg-dot" style="background:var(--rz-empty)"></div>Very Low</div><div class="leg-item"><div class="leg-dot" style="background:var(--rz-low)"></div>Low</div><div class="leg-item"><div class="leg-dot" style="background:var(--rz-medium)"></div>Medium</div><div class="leg-item"><div class="leg-dot" style="background:var(--rz-high)"></div>High</div><div class="leg-item"><div class="leg-dot" style="background:var(--rz-danger)"></div>Danger</div><div class="leg-item"><div class="leg-dot" style="background:var(--rz-cta)"></div>CTA ⚔</div>`;
-    reSec.appendChild(rzLeg);
-    card.appendChild(reSec);
-
-    // ── CTA / demand note ──
-    const ctaWrap=document.createElement('div');
-    ctaWrap.style.padding='0 18px';
-    const ctaLabel = act.isBM ? '📦 BM Demand Logic:' : '⚔ CTA Impact:';
-    ctaWrap.innerHTML=`<div class="cta-banner"><b>${ctaLabel}</b><span>${act.ctaNote}</span></div><div class="rz-impact-note">${act.rzImpact}</div>`;
-    card.appendChild(ctaWrap);
-
-    // ── Windows list with WEEKDAY / WEEKEND tabs for ALL activities ──
-    const body=document.createElement('div');
-    body.className='activity-body';
-
-    const tabWrap=document.createElement('div');
-    tabWrap.style.cssText='display:flex;gap:0;margin-bottom:12px;border-radius:10px;overflow:hidden;border:1px solid var(--border);';
-    const wdBtn=document.createElement('button');
-    const weBtn=document.createElement('button');
-    const tabBaseStyle='background:rgba(255,255,255,.04);border:none;color:var(--muted);font-family:\'Rajdhani\',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 20px;cursor:pointer;transition:all .2s;flex:1;';
-    const tabActiveExtra='color:#0a0e15;background:var(--gold);';
-    wdBtn.textContent='🗓 Weekday';
-    weBtn.textContent='📅 Weekend';
-
-    const renderWindows=(dayKey)=>{
-      activityTabState.set(act.title, dayKey); // persist selection
-      body.querySelectorAll('.window').forEach(el=>el.remove());
-      const wins = dayKey==='weekend' ? (act.windowsWeekend||act.windows) : (act.windowsWeekday||act.windows);
-      const activeW = wins.find(w=>inWindow(currentHour,w.start,w.end));
-      wins.forEach(w=>{
-        const isA=activeW===w;
-        const win=document.createElement('div');
-        win.className=`window ${isA?'active':''}`;
-        const localTimeStr = formatTime(new Date(Date.UTC(2024,0,1,w.start)), activeTz(), false);
-        const localZoneAbbr = ALL_ZONES.find(z=>z.tz===activeTz())?.abbr || 'Local';
-        win.innerHTML=`
-          <div class="window-top">
-            <div class="window-title">${w.label}</div>
-            <div class="live-badge ${badgeClass(w.status)}">${w.status==='avoid'?'NOT IDEAL':w.status.toUpperCase()}</div>
-          </div>
-          <div class="window-time">${fmtRange(w.start,w.end)}</div>
-          <div class="window-local">${localZoneAbbr}: ${localTimeStr}</div>`;
-        body.appendChild(win);
-      });
-      wdBtn.setAttribute('style', tabBaseStyle + (dayKey==='weekday' ? tabActiveExtra : ''));
-      weBtn.setAttribute('style', tabBaseStyle + (dayKey==='weekend' ? tabActiveExtra : ''));
-    };
-
-    wdBtn.onclick=()=>renderWindows('weekday');
-    weBtn.onclick=()=>renderWindows('weekend');
-    tabWrap.appendChild(wdBtn);
-    tabWrap.appendChild(weBtn);
-    body.appendChild(tabWrap);
-    renderWindows(activityTabState.get(act.title) || todayKey);
-
-    card.appendChild(body);
-    container.appendChild(card);
-  });
-}
-
-function renderNowPanel(){
-  const grid=document.getElementById('nowGrid');
-  grid.innerHTML='';
-  const recs=[];
-  const rzData = isWeekend(new Date()) ? 'rzWeekend' : 'rzWeekday';
-
-  activities.forEach(act=>{
-    const active=act.windows.find(w=>inWindow(currentHour,w.start,w.end));
-    if(!active||active.status==='avoid') return;
-    const rzNow=act[rzData][currentHour];
-    recs.push({act,window:active,rzNow,score:active.status==='best'?3:2});
+  TZ_GROUPS[0].zones.forEach(z => {
+    const tab = document.createElement('button');
+    tab.className = 'tz-tab';
+    if(z.tz === tz) tab.classList.add('is-selected');
+    if(z.tz === localTz) tab.classList.add('is-local-tz');
+    tab.title = `${z.countries} (${z.offset})`;
+    tab.innerHTML = `<span class="tz-tab-flag">${z.flag}</span><span class="tz-tab-abbr">${z.abbr}</span>`;
+    tab.addEventListener('click', () => selectTz(z));
+    row.appendChild(tab);
   });
 
-  recs.sort((a,b)=>b.score-a.score);
-  if(!recs.length){
-    grid.innerHTML=`<div class="now-card" style="color:var(--muted)">No strong recommendations right now.</div>`;
-    return;
-  }
-
-  const rzLabel={empty:'🟢 Very Low',low:'🟢 Low',medium:'🟡 Medium',high:'🔴 High',danger:'🔴 Danger',cta:'⚔️ CTA Active — RZ draining'};
-  recs.forEach(r=>{
-    const c=document.createElement('div');
-    c.className=`now-card ${r.window.status}`;
-    c.innerHTML=`
-      <div class="now-card-top">
-        <h3>${r.act.icon} ${r.act.title}</h3>
-        <div class="live-badge ${badgeClass(r.window.status)}">${r.window.status==='avoid'?'NOT IDEAL':r.window.status.toUpperCase()}</div>
-      </div>
-      <div style="font-size:13px;">Window: <strong>${r.window.label}</strong></div>
-      <div class="next-window">${fmtRange(r.window.start,r.window.end)}</div>
-      <div style="font-size:12px;margin-top:7px;color:var(--muted);">RZ density now: <b style="color:var(--text)">${rzLabel[r.rzNow]||'—'}</b></div>`;
-    grid.appendChild(c);
-  });
+  container.appendChild(row);
 }
 
+/* ── Clocks ── */
 function renderClocks(now){
-  // UTC
   document.getElementById('utcClock').textContent = now.toUTCString().split(' ')[4];
-
-  // Local time — AM/PM format (uses selected TZ or real local)
   const tz = activeTz();
   document.getElementById('localClock').textContent = formatTime(now, tz, true, true);
   const localOffset = getLocalUTCOffset(tz);
   const localAbbr = ALL_ZONES.find(z=>z.tz===tz)?.abbr || tz.split('/').pop().replace('_',' ');
   document.getElementById('localTzLabel').textContent = `${localAbbr} · ${localOffset}`;
-
-  // Country flag — only update if not already set by selectTz
   if(!selectedTz){
     const flagEl = document.getElementById('localCountryFlag');
     if(flagEl && detectedCountry) flagEl.textContent = detectedCountry;
   }
-
-  // Day label
-  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const utcDay=now.getUTCDay();
-  const localDay=new Date(now.toLocaleString('en-US',{timeZone:tz})).getDay();
-  document.getElementById('dayLabel').textContent=
-    `${days[utcDay]} UTC  ·  ${days[localDay]} Local  ${isWeekend(now)?'(Weekend)':'(Weekday)'}`;
-
-  // Grouped tz clocks
+  const utcDay = now.getUTCDay();
+  const localDay = new Date(now.toLocaleString('en-US',{timeZone:tz})).getDay();
+  document.getElementById('dayLabel').textContent =
+    `${DAY_FULL[utcDay]} UTC · ${DAY_FULL[localDay]} Local`;
+  document.getElementById('dayInfo').innerHTML =
+    `${DAY_FULL[localDay]} — Server UTC <strong>${DAY_FULL[utcDay]}</strong>`;
   renderTzGroups(now);
 }
 
 /* ══════════════════════════════════════
-   MAIN TICK
+   ACTIVITY PANEL
 ══════════════════════════════════════ */
-function tick(){
-  const now=new Date();
-  currentHour=now.getUTCHours();
-  const weekend=isWeekend(now);
+function buildActivityPanel(act, idx){
+  const todayDayIdx = currentUTCDay;
+  if(!actDayState.has(act.key)) actDayState.set(act.key, todayDayIdx);
 
-  // Only auto-set day toggles if user hasn't manually chosen
-  if(!globalDayManual){
-    globalDay=weekend?'weekend':'weekday';
-    const idx=weekend?1:0;
-    document.querySelectorAll('#globalDayToggle button').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  const selectedDay = actDayState.get(act.key);
+  const wins = getWindowsForDay(act, selectedDay);
+  const showNow = isCurrentDay(selectedDay);
+  const activeWin = showNow ? wins.find(w=>inWindow(currentHour,w.start,w.end)) : null;
+
+  const panel = document.createElement('div');
+
+  // Header
+  const head = document.createElement('div');
+  head.className = 'activity-top';
+  head.innerHTML = `<div class="activity-head">
+    <div class="activity-name">
+      <div class="activity-icon">${act.icon}</div>
+      <div>
+        <h3>${act.title}</h3>
+        <div class="activity-prefer">${act.prefer}</div>
+      </div>
+    </div>
+    ${activeWin?`<div class="live-badge ${badgeClass(activeWin.status)}">${activeWin.status==='avoid'?'NOT IDEAL':activeWin.status.toUpperCase()}</div>`:''}
+  </div>`;
+  panel.appendChild(head);
+
+  // ── 7-day heatmap ──
+  const hmSec = document.createElement('div');
+  hmSec.className = 'heatmap-section';
+
+  const dayTabRow = document.createElement('div');
+  dayTabRow.className = 'tab-row-7';
+
+  const hmTrackWrap = document.createElement('div');
+  hmTrackWrap.className = 'heatmap-section-inner';
+
+  const hmLabel = document.createElement('div');
+  hmLabel.className = 'heatmap-label';
+
+  // ── Window list DOM (declared early so buildHmForDay and dayTab clicks can reference it) ──
+  const body = document.createElement('div');
+  body.className = 'activity-body';
+  body.style.padding = '4px 0 0 0';
+
+  const forecastNav = document.createElement('div');
+  forecastNav.className = 'act-forecast-nav';
+  const prevBtn = document.createElement('button');
+  prevBtn.textContent = '◀ Yesterday';
+  const nextBtn = document.createElement('button');
+  nextBtn.textContent = 'Tomorrow ▶';
+  const fcLabel = document.createElement('div');
+  fcLabel.className = 'act-forecast-label';
+  forecastNav.appendChild(prevBtn);
+  forecastNav.appendChild(fcLabel);
+  forecastNav.appendChild(nextBtn);
+  body.appendChild(forecastNav);
+
+  // ── Single shared renderWindowsForDay ──
+  const renderWindowsForDay = (dayIdx) => {
+    body.querySelectorAll('.window').forEach(el => el.remove());
+    const isToday = isCurrentDay(dayIdx);
+    fcLabel.textContent = isToday
+      ? `Today · ${DAY_FULL[dayIdx]}`
+      : dayIdx === (currentUTCDay + 1) % 7
+        ? `Tomorrow · ${DAY_FULL[dayIdx]}`
+        : dayIdx === (currentUTCDay + 6) % 7
+          ? `Yesterday · ${DAY_FULL[dayIdx]}`
+          : `Forecast · ${DAY_FULL[dayIdx]}`;
+
+    const dayWins = getWindowsForDay(act, dayIdx);
+    const activeW = isToday ? dayWins.find(w => inWindow(currentHour, w.start, w.end)) : null;
+    dayWins.forEach(w => {
+      const win = document.createElement('div');
+      win.className = `window ${activeW === w ? 'active' : ''}`;
+      const tz = activeTz();
+      const startDate = new Date(Date.UTC(2024, 0, 1, w.start % 24));
+      const endDate   = new Date(Date.UTC(2024, 0, 1, w.end   % 24));
+      const localStartStr = formatTime(startDate, tz, false, true);
+      const localEndStr   = formatTime(endDate,   tz, false, true);
+      const localZoneAbbr = ALL_ZONES.find(z => z.tz === tz)?.abbr || 'Local';
+      win.innerHTML = `
+        <div class="window-top">
+          <div class="window-title">${w.label}</div>
+          <div class="live-badge ${badgeClass(w.status)}">${w.status === 'avoid' ? 'NOT IDEAL' : w.status.toUpperCase()}</div>
+        </div>
+        <div class="window-time">${fmtRange(w.start, w.end)}</div>
+        <div class="window-local">
+          <span class="window-local-item">${localZoneAbbr}: ${localStartStr}</span>
+          <span class="window-local-sep">→</span>
+          <span class="window-local-item">${localEndStr}</span>
+        </div>`;
+      body.appendChild(win);
+    });
+  };
+
+  // ── Heatmap day builder (calls shared renderWindowsForDay) ──
+  const buildHmForDay = (dayIdx) => {
+    actDayState.set(act.key, dayIdx);
+    const dayWins = getWindowsForDay(act, dayIdx);
+    const vals = Array.from({length: 24}, (_, h) => getActStatus(h, dayWins));
+    const showN = isCurrentDay(dayIdx);
+    hmTrackWrap.innerHTML = '';
+    hmLabel.innerHTML = `<span class="tag tag-act">Activity Windows</span><span class="tag ${DAY_CLASSES[dayIdx]}">${DAY_FULL[dayIdx]}</span>${showN ? '<span style="font-size:9px;color:var(--amber)"> · Live</span>' : ''}`;
+    hmTrackWrap.appendChild(hmLabel);
+    hmTrackWrap.appendChild(buildTrackEl(vals, showN ? currentHour : -1, 'activity'));
+    hmTrackWrap.appendChild(axisEl());
+    dayTabRow.querySelectorAll('button').forEach((b, i) => b.classList.toggle('active', i === dayIdx));
+    renderWindowsForDay(dayIdx);
+  };
+
+  // Build day tab buttons
+  for(let i = 0; i < 7; i++){
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn-7';
+    btn.textContent = DAY_NAMES[i];
+    if(i === currentUTCDay) btn.classList.add('is-today');
+    if(i === selectedDay)   btn.classList.add('active');
+    btn.addEventListener('click', () => buildHmForDay(i));
+    dayTabRow.appendChild(btn);
+  }
+
+  // Legend
+  const aLeg = document.createElement('div');
+  aLeg.className = 'bar-legend';
+  aLeg.style.padding = '0 14px 12px';
+  aLeg.innerHTML = `
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hm-best)"></div>Best</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hm-good)"></div>Good</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hm-avoid)"></div>Not Ideal</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--hm-neutral)"></div>Neutral</div>`;
+
+  hmSec.appendChild(dayTabRow);
+  buildHmForDay(selectedDay); // initial render (also calls renderWindowsForDay)
+  hmSec.appendChild(hmTrackWrap);
+  hmSec.appendChild(aLeg);
+  panel.appendChild(hmSec);
+
+  // CTA / notes
+  const ctaWrap = document.createElement('div');
+  const ctaLabel = act.isBM ? '📦 BM Demand Logic' : '⚔ CTA Impact';
+  const ctaId = `cta-tip-${act.key}-${idx}`;
+  ctaWrap.innerHTML = `
+    <div class="cta-info-row">
+      <button class="cta-info-btn" aria-label="CTA Impact info" data-cta="${ctaId}">ⓘ</button>
+      <span class="cta-info-label">${ctaLabel}</span>
+      <div class="cta-tooltip-popover" id="${ctaId}"><b>${ctaLabel}:</b> ${act.ctaNote}</div>
+    </div>
+    <div class="rz-impact-note">${act.rzImpact}</div>`;
+  panel.appendChild(ctaWrap);
+
+  // Wire up the CTA info button — use ctaOpenKeys to survive re-renders
+  const ctaBtn = ctaWrap.querySelector('.cta-info-btn');
+  const ctaTip = ctaWrap.querySelector('.cta-tooltip-popover');
+  const ctaKey = act.key;
+  // Restore open state if it was open before re-render
+  if(ctaOpenKeys.has(ctaKey)) ctaTip.classList.add('is-open');
+  ctaBtn.addEventListener('click', e=>{
+    e.stopPropagation();
+    const isOpen = ctaOpenKeys.has(ctaKey);
+    // Close all others
+    ctaOpenKeys.clear();
+    document.querySelectorAll('.cta-tooltip-popover.is-open').forEach(el=>el.classList.remove('is-open'));
+    if(!isOpen){
+      ctaOpenKeys.add(ctaKey);
+      ctaTip.classList.add('is-open');
+    }
+  });
+
+  // Forecast nav wiring
+  prevBtn.addEventListener('click', () => {
+    const cur = actDayState.get(act.key) ?? currentUTCDay;
+    buildHmForDay((cur + 6) % 7);
+  });
+  nextBtn.addEventListener('click', () => {
+    const cur = actDayState.get(act.key) ?? currentUTCDay;
+    buildHmForDay((cur + 1) % 7);
+  });
+
+  panel.appendChild(body);
+  return panel;
+}
+
+/* ── Render Activities ── */
+function renderActivities(){
+  const tabBar   = document.getElementById('actTabBar');
+  const tabPanel = document.getElementById('actTabPanel');
+
+  if(!tabBar.children.length){
+    activities.forEach((act, idx)=>{
+      const btn = document.createElement('button');
+      btn.className = 'act-tab-btn' + (idx===activeActivityIdx?' active':'');
+      btn.dataset.idx = idx;
+      const wins = getWindowsForDay(act, currentUTCDay);
+      const activeWin = wins.find(w=>inWindow(currentHour,w.start,w.end));
+      const badgeCls = activeWin ? badgeClass(activeWin.status) : 'badge-neutral';
+      const badgeText = activeWin ? (activeWin.status==='avoid'?'NOT IDEAL':activeWin.status.toUpperCase()) : '—';
+      btn.innerHTML = `<span class="act-tab-icon">${act.icon}</span><span>${act.title}</span><span class="act-tab-badge ${badgeCls}">${badgeText}</span>`;
+      btn.onclick = ()=>{ activeActivityIdx=idx; renderActivities(); };
+      tabBar.appendChild(btn);
+    });
+    tabPanel.appendChild(buildActivityPanel(activities[activeActivityIdx], activeActivityIdx));
+    return;
+  }
+
+  // Update tab badges live
+  Array.from(tabBar.children).forEach((btn, idx)=>{
+    const act = activities[idx];
+    const wins = getWindowsForDay(act, currentUTCDay);
+    const activeWin = wins.find(w=>inWindow(currentHour,w.start,w.end));
+    const badge = btn.querySelector('.act-tab-badge');
+    if(badge){
+      badge.className = 'act-tab-badge ' + (activeWin ? badgeClass(activeWin.status) : 'badge-neutral');
+      badge.textContent = activeWin ? (activeWin.status==='avoid'?'NOT IDEAL':activeWin.status.toUpperCase()) : '—';
+    }
+    btn.classList.toggle('active', idx===activeActivityIdx);
+  });
+
+  tabPanel.innerHTML = '';
+  tabPanel.appendChild(buildActivityPanel(activities[activeActivityIdx], activeActivityIdx));
+}
+
+/* ── Now Panel ── */
+function renderNowPanel(){
+  const grid = document.getElementById('nowGrid');
+  grid.innerHTML = '';
+  const recs = [];
+  const wins = activities.map(act=>({act, w: getWindowsForDay(act, currentUTCDay).find(w=>inWindow(currentHour,w.start,w.end))}));
+
+  wins.forEach(({act,w})=>{
+    if(!w || w.status==='avoid') return;
+    const rzNow = (currentUTCDay===0||currentUTCDay===6) ? act.rzWeekend[currentHour] : act.rzWeekday[currentHour];
+    recs.push({act, window:w, rzNow, score: w.status==='best'?3:2});
+  });
+  recs.sort((a,b)=>b.score-a.score);
+
+  if(!recs.length){
+    grid.innerHTML = `<div class="now-empty">No strong recommendations right now. Off-peak hours — consider safe transport or planning.</div>`;
+    return;
+  }
+  const rzLabel = {
+    empty:'Very Low', low:'Low', medium:'Medium',
+    high:'High', danger:'Danger', cta:'CTA Active — RZ draining'
+  };
+  recs.forEach(r=>{
+    const c = document.createElement('div');
+    c.className = `now-item status-${r.window.status}`;
+    c.innerHTML = `
+      <div class="now-icon">${r.act.icon}</div>
+      <div class="now-info">
+        <div class="now-title">${r.act.title}</div>
+        <div class="now-detail">${r.window.label} · RZ: ${rzLabel[r.rzNow]||'—'}</div>
+      </div>
+      <div class="now-badge ${badgeClass(r.window.status)}">${r.window.status==='avoid'?'NOT IDEAL':r.window.status.toUpperCase()}</div>`;
+    grid.appendChild(c);
+  });
+}
+
+/* ── Main tick ── */
+function tick(){
+  const now = new Date();
+  currentHour   = now.getUTCHours();
+  currentUTCDay = now.getUTCDay();
+
+  if(!popDayManual){
+    popSelectedDay = currentUTCDay;
+    refreshPopPicker();
   }
   if(!rzDayManual){
-    rzDay=weekend?'weekend':'weekday';
-    const idx=weekend?1:0;
-    document.querySelectorAll('#rzDayToggle button').forEach((b,i)=>b.classList.toggle('active',i===idx));
+    rzSelectedDay = currentUTCDay;
+    refreshRzPicker();
   }
 
   renderClocks(now);
@@ -977,11 +2083,11 @@ function tick(){
   renderNowPanel();
 }
 
-/* ══════════════════════════════════════
-   INIT
-══════════════════════════════════════ */
+// Initial picker build
+refreshPopPicker();
+refreshRzPicker();
 tick();
-setInterval(tick,1000);
+setInterval(tick, 1000);
 </script>
 </body>
 </html>
